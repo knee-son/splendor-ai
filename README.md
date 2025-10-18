@@ -5,6 +5,8 @@ i've been losing too much on this game so i'll train AI to train me to get bette
 - [x] import Splendor cards and nobles data
     - [ ] cross-check cards with visuals
 - [ ] compose game structure and rules
+    - [ ] present initial game states
+    - [ ] validate some game states
 - [ ] compose game API
 - [ ] make AI model
 - [ ] train
