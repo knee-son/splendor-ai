@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react';
 import EngineCard from '../components/EngineCard';
 import CardFooter from '../components/CardFooter';
 
-// import cards from '../../../metadata/cards.json';
-// import nobles from '../../../metadata/nobles.json';
-
 export default function CardsPage() {
   const [cards, setCards] = useState<any[]>([]);
   const [nobles, setNobles] = useState<any[]>([]);
