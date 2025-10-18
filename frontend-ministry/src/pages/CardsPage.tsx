@@ -26,7 +26,7 @@ export default function CardsPage() {
 
   return (
     <div className="flex flex-col h-screen justify-between items-center p-6 bg-gray-100">
-      <EngineCard cardInfo={cards[cardIndex]} />
+      <EngineCard cardInfo={cards[cardIndex - 1]} />
       <CardFooter cardNumber={cardIndex} setCardNumber={setCardIndex} />
     </div>
   );

@@ -22,9 +22,6 @@ df = df.rename(columns={
 # from number to name
 df['engine'] = [arr[i] for i in df['engine']]
 
-# sort tier first
-df.sort_values(by=["tier"], inplace=True)
-
 # sort 'engine' by doing magic jack shit
 from functools import reduce
 
@@ -32,6 +29,9 @@ disassembled = [df[df['engine']==gem] for gem in sorted]
 assembled = reduce(lambda a, b: pandas.concat([a, b], ignore_index=True), disassembled)
 
 df = assembled
+
+# sort by tier afterwards
+df.sort_values(by=["tier"], inplace=True)
 
 # mutate 'cost' col
 costs_col = df['cost']
