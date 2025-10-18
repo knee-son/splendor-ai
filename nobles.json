@@ -1,0 +1,112 @@
+[
+  {
+    "name": "magellan",
+    "cost": {
+      "diamond": 3,
+      "sapphire": 0,
+      "emerald": 0,
+      "ruby": 3,
+      "onyx": 3
+    },
+    "prestige": 3
+  },
+  {
+    "name": "teresa",
+    "cost": {
+      "diamond": 0,
+      "sapphire": 3,
+      "emerald": 3,
+      "ruby": 3,
+      "onyx": 0
+    },
+    "prestige": 3
+  },
+  {
+    "name": "victoria",
+    "cost": {
+      "diamond": 0,
+      "sapphire": 0,
+      "emerald": 4,
+      "ruby": 4,
+      "onyx": 0
+    },
+    "prestige": 3
+  },
+  {
+    "name": "peter",
+    "cost": {
+      "diamond": 0,
+      "sapphire": 0,
+      "emerald": 0,
+      "ruby": 4,
+      "onyx": 4
+    },
+    "prestige": 3
+  },
+  {
+    "name": "isabella",
+    "cost": {
+      "diamond": 3,
+      "sapphire": 3,
+      "emerald": 3,
+      "ruby": 0,
+      "onyx": 0
+    },
+    "prestige": 3
+  },
+  {
+    "name": "korina",
+    "cost": {
+      "diamond": 3,
+      "sapphire": 3,
+      "emerald": 0,
+      "ruby": 0,
+      "onyx": 3
+    },
+    "prestige": 3
+  },
+  {
+    "name": "pastor",
+    "cost": {
+      "diamond": 4,
+      "sapphire": 4,
+      "emerald": 0,
+      "ruby": 0,
+      "onyx": 0
+    },
+    "prestige": 3
+  },
+  {
+    "name": "legaspi",
+    "cost": {
+      "diamond": 0,
+      "sapphire": 0,
+      "emerald": 3,
+      "ruby": 3,
+      "onyx": 3
+    },
+    "prestige": 3
+  },
+  {
+    "name": "joan",
+    "cost": {
+      "diamond": 4,
+      "sapphire": 0,
+      "emerald": 0,
+      "ruby": 0,
+      "onyx": 4
+    },
+    "prestige": 3
+  },
+  {
+    "name": "sultan",
+    "cost": {
+      "diamond": 0,
+      "sapphire": 4,
+      "emerald": 4,
+      "ruby": 0,
+      "onyx": 0
+    },
+    "prestige": 3
+  }
+]
