@@ -1,3 +1,14 @@
+## statement of the problem
+i've been losing too much on this game so i'll train AI to train me to get better at Splendor
+
+### roadmap
+- [x] import Splendor cards and nobles data
+    - [ ] cross-check cards with visuals
+- [ ] compose game structure and rules
+- [ ] compose game API
+- [ ] make AI model
+- [ ] train
+
 ## buildout
 ### on `backend`
 - `python14 -m venv venv`
