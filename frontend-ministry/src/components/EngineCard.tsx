@@ -6,24 +6,24 @@ import onyxMine from '../assets/images/onyx_mine.png';
 
 const engineImages = {
   diamond: diamondMine,
+  sapphire: sapphireMine,
   emerald: emeraldMine,
   ruby: rubyMine,
-  sapphire: sapphireMine,
   onyx: onyxMine,
 }
 
 interface Cost {
   diamond: number;
+  sapphire: number;
   emerald: number;
   ruby: number;
-  sapphire: number;
   onyx: number;
 }
 
 interface CardInfo {
   cost: Cost;
    // doing this instead of string prevents lint because ts get angy
-  engine: 'diamond' | 'emerald' | 'ruby' | 'sapphire' | 'onyx';
+  engine: 'diamond' | 'sapphire' | 'emerald' | 'ruby' | 'onyx';
   prestige: number;
   tier: number;
 }
