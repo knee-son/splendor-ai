@@ -5,6 +5,7 @@
 - `cp .env.example .env`
 #### running backend
 - `source venv/bin/activate` or `source venv/Scripts/activate` for cringy Windows
+- run using `python serve.py`
 
 ### on `frontend-ministry`
 - `npm i`

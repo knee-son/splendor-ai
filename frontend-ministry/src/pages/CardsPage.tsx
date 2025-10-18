@@ -9,7 +9,7 @@ export default function CardsPage() {
   const [cards, setCards] = useState<any[]>([]);
   const [nobles, setNobles] = useState<any[]>([]);
 
-  const [cardNumber, setCardNumber] = useState<number>(1);
+  const [cardIndex, setCardIndex] = useState<number>(1);
 
   useEffect(() => {
     const cards_path = import.meta.env.VITE_CARDS;
@@ -17,24 +17,17 @@ export default function CardsPage() {
 
     fetch(cards_path)
       .then(res => res.json())
-      .then(setCards);
+      .then(data => setCards(data));
 
     fetch(nobles_path)
       .then(res => res.json())
-      .then(setNobles);
-
-    console.log(`Cards path at: ${cards_path} and nobles at: ${nobles_path}`);
-    console.log(`Loaded ${cards.length} cards and ${nobles.length} nobles.`);
-
-
-    console.log(cards, nobles);
+      .then(data => setNobles(data));
   }, []);
 
   return (
     <div className="flex flex-col h-screen justify-between items-center p-6 bg-gray-100">
-      <EngineCard cardNumber={cardNumber}/>
-
-      <CardFooter cardNumber={cardNumber} setCardNumber={setCardNumber} />
+      <EngineCard cardInfo={cards[cardIndex]} />
+      <CardFooter cardNumber={cardIndex} setCardNumber={setCardIndex} />
     </div>
   );
 }
