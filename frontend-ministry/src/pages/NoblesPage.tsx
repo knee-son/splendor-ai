@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import EngineCard from '../components/EngineCard';
+import NobleCard from '../components/NobleCard';
 import CardFooter from '../components/CardFooter';
-import CardPageScrollbar from '../components/CardPageScrollbar';
 
 export default function CardsPage() {
   const navigate = useNavigate();
 
-  const [cards, setCards] = useState<any[]>([]);
+  const [nobles, setNobles] = useState<any[]>([]);
   const [cardIndex, setCardIndex] = useState<number>(1);
 
   useEffect(() => {
-    const cards_path = import.meta.env.VITE_CARDS;
+    const nobles_path = import.meta.env.VITE_NOBLES;
 
-    fetch(cards_path)
+    fetch(nobles_path)
       .then(res => res.json())
-      .then(data => setCards(data));
+      .then(data => setNobles(data));
   }, []);
 
   return (
@@ -27,10 +26,9 @@ export default function CardsPage() {
       <span className="material-symbols-outlined">arrow_back</span>
       Back to Menu
     </button>
-    <h1 className="absolute top-14 text-5xl font-bold">Splendor Cards 🃏</h1>
-    <EngineCard cardInfo={cards[cardIndex - 1]} />
+    <h1 className="absolute top-14 text-5xl font-bold">Splendor Nobles 👑</h1>
+    <NobleCard nobleInfo={nobles[cardIndex - 1]} />
     <CardFooter cardNumber={cardIndex} setCardNumber={setCardIndex} />
-    <CardPageScrollbar cards={cards} cardNumber={cardIndex} setCardNumber={setCardIndex}/>
   </div>
   );
 }
