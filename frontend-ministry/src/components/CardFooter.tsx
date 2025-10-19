@@ -19,7 +19,7 @@ export default function CardFooter({ cardNumber, setCardNumber }: CardFooterProp
   };
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 absolute bottom-4">
       <button
         onClick={handlePrev}
         className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition disabled:opacity-50"

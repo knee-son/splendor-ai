@@ -19,15 +19,15 @@ import onyxProspect from '../assets/images/onyx_prospector.png';
 type GemType = 'diamond' | 'emerald' | 'ruby' | 'sapphire' | 'onyx';
 type Cost = Record<GemType, number>;
 
-interface CardInfo {
+interface Card {
   cost: Cost;
-   // doing this instead of string prevents lint because ts get angy
+  // doing this instead of string prevents lint because ts get angy
   engine: GemType;
   prestige: number;
   tier: number;
 }
 interface CardProps {
-  cardInfo: CardInfo;
+  cardInfo: Card;
 }
 
 const engineImages: Record<GemType, string> = {
@@ -66,14 +66,11 @@ export default function EngineCard({ cardInfo }: CardProps) {
       backgroundPosition: 'top center',
     }}
   >
-    {/* Top row: prestige (left) and engine image (right) */}
     <div className="absolute w-full flex justify-between items-start p-2 bg-gray-200/60 rounded-t-md">
-      {/* Prestige at top-left */}
       <div className="text-4xl">
         {cardInfo?.prestige ? cardInfo.prestige : ''}
       </div>
 
-      {/* Engine image at top-right */}
       <div className="w-14 h-14">
         <img
           src={gemImages[cardInfo?.engine]}
@@ -83,6 +80,7 @@ export default function EngineCard({ cardInfo }: CardProps) {
       </div>
     </div>
 
+    {/* gem costs panel */}
     <div className="absolute bottom-2 left-2 text-lg rounded-md">
       <div className="flex flex-col">{
         Object.entries(cardInfo?.cost || {})
