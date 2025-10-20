@@ -43,7 +43,7 @@ export default function CardsPage() {
     <EngineCard cardInfo={cards[cardIndex - 1]} />
     <CardFooter cardNumber={cardIndex} setCardNumber={setCardIndex} maxCardNumber={cards.length} />
     <CardPageScrollbar cards={cards} cardNumber={cardIndex} setCardNumber={setCardIndex} />
-    <CardNavigator onPrev={decrementCardIndex} onNext={incrementCardIndex} />
+    <CardNavigator onPrev={decrementCardIndex} onNext={incrementCardIndex} addVertical />
   </div>
   );
 }
