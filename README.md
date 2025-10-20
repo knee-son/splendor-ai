@@ -16,9 +16,7 @@ i've been losing too much on this game so i'll train AI to train me to get bette
 - `python14 -m venv venv`
 - `pip install -r requirements.txt`
 - `cp .env.example .env`
-#### running backend
-- `source venv/bin/activate` or `source venv/Scripts/activate` for cringy Windows
-- run using `python serve.py`
+- run using `./serve`
 
 ### on `frontend-ministry`
 - `npm i`

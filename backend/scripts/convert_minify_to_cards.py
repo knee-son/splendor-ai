@@ -1,6 +1,8 @@
+# converts minified (handcoded) json data to formal json cards
+
 import json, pandas
 
-from scripts.path_manager import METADATA_DIR
+from path_manager import METADATA_DIR
 
 cards_input = METADATA_DIR / "cards_minified.json"
 cards_output = METADATA_DIR / "cards.json"

@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 import json
 
-from scripts.path_manager import METADATA_DIR
+from path_manager import METADATA_DIR
 
 cards_dir = METADATA_DIR / "cards.json"
 nobles_dir = METADATA_DIR / "nobles.json"

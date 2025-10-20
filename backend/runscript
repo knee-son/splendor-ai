@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# runs python scripts at ./scripts
+# provide just the file body
+# example:
+# ./runscript downscale_images
+
+./activate_venv
+python ./scripts/$1.py

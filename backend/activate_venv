@@ -1,0 +1,17 @@
+# === Activate virtual environment ===
+if [ -f "venv/bin/activate" ]; then
+    source venv/bin/activate
+elif [ -f "venv/Scripts/activate" ]; then
+    source venv/Scripts/activate
+else
+    echo "❌ Can't find virtual environment at ./venv"
+    exit 1
+fi
+
+echo "✅ Loaded Python virtual environment from ./venv"
+
+# === Load environment variables from .env ===
+if [ -f ".env" ]; then
+    export $(grep -v '^#' .env | xargs)
+    echo "✅ Loaded environment from .env"
+fi
