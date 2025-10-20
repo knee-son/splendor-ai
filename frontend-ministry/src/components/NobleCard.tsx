@@ -1,3 +1,5 @@
+import type { Noble, GemType } from '@/types/splendor'
+
 import diamondGem from '../assets/images/diamond_gem.png';
 import emeraldGem from '../assets/images/emerald_gem.png';
 import rubyGem from '../assets/images/ruby_gem.png';
@@ -6,15 +8,6 @@ import onyxGem from '../assets/images/onyx_gem.png';
 
 import onyxProspect from '../assets/images/onyx_prospector.png';
 
-type GemType = 'diamond' | 'emerald' | 'ruby' | 'sapphire' | 'onyx';
-type Cost = Record<GemType, number>;
-
-interface Noble {
-  name: string;
-  cost: Cost;
-  prestige: number;
-  tier: number;
-}
 interface NobleProps {
   nobleInfo: Noble;
 }

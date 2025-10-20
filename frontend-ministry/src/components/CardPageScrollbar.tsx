@@ -1,15 +1,5 @@
 import React from "react";
-
-type GemType = 'diamond' | 'emerald' | 'ruby' | 'sapphire' | 'onyx';
-type Cost = Record<GemType, number>;
-
-interface Card {
-  cost: Cost;
-  // doing this instead of string prevents lint because ts get angy
-  engine: GemType;
-  prestige: number;
-  tier: number;
-}
+import type { Card } from "@/types/splendor";
 
 interface CardPageScrollbarProps {
   cards: Card[];

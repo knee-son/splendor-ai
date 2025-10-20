@@ -1,3 +1,5 @@
+import type { Card, GemType } from '@/types/splendor';
+
 import diamondMine from '../assets/images/diamond_mine.png';
 import emeraldMine from '../assets/images/emerald_mine.png';
 import rubyMine from '../assets/images/ruby_mine.png';
@@ -16,16 +18,6 @@ import rubyProspect from '../assets/images/ruby_prospector.png';
 import sapphireProspect from '../assets/images/sapphire_prospector.png';
 import onyxProspect from '../assets/images/onyx_prospector.png';
 
-type GemType = 'diamond' | 'emerald' | 'ruby' | 'sapphire' | 'onyx';
-type Cost = Record<GemType, number>;
-
-interface Card {
-  cost: Cost;
-  // doing this instead of string prevents lint because ts get angy
-  engine: GemType;
-  prestige: number;
-  tier: number;
-}
 interface CardProps {
   cardInfo: Card;
 }

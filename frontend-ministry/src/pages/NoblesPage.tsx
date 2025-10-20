@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NobleCard from '../components/NobleCard';
-import CardFooter from '../components/CardFooter';
+import NobleCard from '@/components/NobleCard';
+import CardFooter from '@/components/CardFooter';
 
 export default function CardsPage() {
   const navigate = useNavigate();

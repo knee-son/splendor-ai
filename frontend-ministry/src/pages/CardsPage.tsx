@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import EngineCard from '../components/EngineCard';
-import CardFooter from '../components/CardFooter';
-import CardPageScrollbar from '../components/CardPageScrollbar';
+import EngineCard from '@/components/EngineCard';
+import CardFooter from '@/components/CardFooter';
+import CardPageScrollbar from '@/components/CardPageScrollbar';
 
 export default function CardsPage() {
   const navigate = useNavigate();
