@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CardNavigator } from '@/components/CardNavigator';
 import NobleCard from '@/components/NobleCard';
 import CardFooter from '@/components/CardFooter';
 
@@ -8,6 +9,17 @@ export default function CardsPage() {
 
   const [nobles, setNobles] = useState<any[]>([]);
   const [cardIndex, setCardIndex] = useState<number>(1);
+  
+  function decrementCardIndex() {
+    if (cardIndex > 1) {
+      setCardIndex(cardIndex - 1);
+    }
+  };
+  function incrementCardIndex() {
+    if (cardIndex < nobles.length) {
+      setCardIndex(cardIndex + 1);
+    }
+  };
 
   useEffect(() => {
     const nobles_path = import.meta.env.VITE_NOBLES;
@@ -28,7 +40,8 @@ export default function CardsPage() {
     </button>
     <h1 className="absolute top-14 text-5xl font-bold">Splendor Nobles 👑</h1>
     <NobleCard nobleInfo={nobles[cardIndex - 1]} />
-    <CardFooter cardNumber={cardIndex} setCardNumber={setCardIndex} />
+    <CardFooter cardNumber={cardIndex} setCardNumber={setCardIndex} maxCardNumber={nobles.length} />
+    <CardNavigator onPrev={decrementCardIndex} onNext={incrementCardIndex} />
   </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CardNavigator } from '@/components/CardNavigator';
 import EngineCard from '@/components/EngineCard';
 import CardFooter from '@/components/CardFooter';
 import CardPageScrollbar from '@/components/CardPageScrollbar';
@@ -9,6 +10,17 @@ export default function CardsPage() {
 
   const [cards, setCards] = useState<any[]>([]);
   const [cardIndex, setCardIndex] = useState<number>(1);
+
+  function decrementCardIndex() {
+    if (cardIndex > 1) {
+      setCardIndex(cardIndex - 1);
+    }
+  };
+  function incrementCardIndex() {
+    if (cardIndex < cards.length) {
+      setCardIndex(cardIndex + 1);
+    }
+  };
 
   useEffect(() => {
     const cards_path = import.meta.env.VITE_CARDS;
@@ -29,8 +41,9 @@ export default function CardsPage() {
     </button>
     <h1 className="absolute top-14 text-5xl font-bold">Splendor Cards 🃏</h1>
     <EngineCard cardInfo={cards[cardIndex - 1]} />
-    <CardFooter cardNumber={cardIndex} setCardNumber={setCardIndex} />
-    <CardPageScrollbar cards={cards} cardNumber={cardIndex} setCardNumber={setCardIndex}/>
+    <CardFooter cardNumber={cardIndex} setCardNumber={setCardIndex} maxCardNumber={cards.length} />
+    <CardPageScrollbar cards={cards} cardNumber={cardIndex} setCardNumber={setCardIndex} />
+    <CardNavigator onPrev={decrementCardIndex} onNext={incrementCardIndex} />
   </div>
   );
 }

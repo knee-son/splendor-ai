@@ -33,8 +33,6 @@ export default function EngineCard({ cardInfo }: CardProps) {
   const imageKey = `/src/assets/images/${engine}_${category}.png`;
   const imageSrc = (images[imageKey] as { default: string })?.default;
 
-  console.log('image path at:', imageSrc);
-
   return (
   <div
     className="w-80 h-96 border-2 border-gray-800 rounded-lg shadow-md relative text-2xl font-semibold"
@@ -58,7 +56,7 @@ export default function EngineCard({ cardInfo }: CardProps) {
       </div>
     </div>
 
-    {/* gem costs panel */}
+    {/* gem costs section */}
     <div className="absolute bottom-2 left-2 text-lg rounded-md">
       <div className="flex flex-col">{
         Object.entries(cardInfo?.cost || {})
