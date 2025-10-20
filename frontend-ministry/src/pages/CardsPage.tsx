@@ -23,9 +23,9 @@ export default function CardsPage() {
   };
 
   useEffect(() => {
-    const cards_path = import.meta.env.VITE_CARDS;
+    const cards_url = import.meta.env.VITE_CARDS_URL;
 
-    fetch(cards_path)
+    fetch(cards_url)
       .then(res => res.json())
       .then(data => setCards(data));
   }, []);

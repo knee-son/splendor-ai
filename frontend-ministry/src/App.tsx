@@ -1,15 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
-import CardsPage from './pages/CardsPage';
-import NoblesPage from './pages/NoblesPage';
+import { appRoutes } from "@/routes";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/cards" element={<CardsPage />} />
-        <Route path="/nobles" element={<NoblesPage />} />
+        {appRoutes.map(({ path, element }) => (
+          <Route key={path} path={path} element={element} />
+        ))}
       </Routes>
     </Router>
   );
