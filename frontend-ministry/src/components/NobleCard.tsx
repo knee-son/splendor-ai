@@ -6,8 +6,6 @@ import rubyGem from '../assets/images/ruby_gem.png';
 import sapphireGem from '../assets/images/sapphire_gem.png';
 import onyxGem from '../assets/images/onyx_gem.png';
 
-import onyxProspect from '../assets/images/onyx_prospector.png';
-
 interface NobleProps {
   nobleInfo: Noble;
 }
@@ -20,14 +18,19 @@ const gemImages: Record<GemType, string> = {
   onyx: onyxGem,
 }
 
-export default function EngineCard({ nobleInfo }: NobleProps) {
+const images = import.meta.glob('@/assets/images/*.png', { eager: true });
+
+export default function NobleCard({ nobleInfo }: NobleProps) {  
+  const name = nobleInfo?.name;
+
+  const imageKey = `/src/assets/images/noble_${name}.png`;
+  const imageSrc = (images[imageKey] as { default: string })?.default;
+
   return (
   <div
     className="w-72 h-72 border-2 border-gray-800 rounded-lg shadow-md relative text-2xl font-semibold"
     style={{
-      backgroundImage: `url(${
-        onyxProspect
-      })`,
+      backgroundImage: `url(${ imageSrc })`,
       backgroundSize: 'cover',
       backgroundPosition: 'top center',
     }}

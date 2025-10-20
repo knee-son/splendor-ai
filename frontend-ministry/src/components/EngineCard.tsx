@@ -1,33 +1,15 @@
 import type { Card, GemType } from '@/types/splendor';
 
-import diamondMine from '../assets/images/diamond_mine.png';
-import emeraldMine from '../assets/images/emerald_mine.png';
-import rubyMine from '../assets/images/ruby_mine.png';
-import sapphireMine from '../assets/images/sapphire_mine.png';
-import onyxMine from '../assets/images/onyx_mine.png';
-
 import diamondGem from '../assets/images/diamond_gem.png';
 import emeraldGem from '../assets/images/emerald_gem.png';
 import rubyGem from '../assets/images/ruby_gem.png';
 import sapphireGem from '../assets/images/sapphire_gem.png';
 import onyxGem from '../assets/images/onyx_gem.png';
 
-import diamondProspect from '../assets/images/diamond_prospector.png';
-import emeraldProspect from '../assets/images/emerald_prospector.png';
-import rubyProspect from '../assets/images/ruby_prospector.png';
-import sapphireProspect from '../assets/images/sapphire_prospector.png';
-import onyxProspect from '../assets/images/onyx_prospector.png';
-
-interface CardProps {
-  cardInfo: Card;
-}
-
-const engineImages: Record<GemType, string> = {
-  diamond: diamondMine,
-  sapphire: sapphireMine,
-  emerald: emeraldMine,
-  ruby: rubyMine,
-  onyx: onyxMine,
+const tierToCategory: Record<number, string> = {
+  1: "mine",
+  2: "prospector",
+  3: "cafe",
 }
 
 const gemImages: Record<GemType, string> = {
@@ -38,22 +20,26 @@ const gemImages: Record<GemType, string> = {
   onyx: onyxGem,
 }
 
-const prosImages: Record<GemType, string> = {
-  diamond: diamondProspect,
-  sapphire: sapphireProspect,
-  emerald: emeraldProspect,
-  ruby: rubyProspect,
-  onyx: onyxProspect,
+interface CardProps {
+  cardInfo: Card;
 }
 
+const images = import.meta.glob('@/assets/images/*.png', { eager: true });
+
 export default function EngineCard({ cardInfo }: CardProps) {
+  const engine = cardInfo?.engine;
+  const category = tierToCategory[cardInfo?.tier];
+
+  const imageKey = `/src/assets/images/${engine}_${category}.png`;
+  const imageSrc = (images[imageKey] as { default: string })?.default;
+
+  console.log('image path at:', imageSrc);
+
   return (
   <div
     className="w-80 h-96 border-2 border-gray-800 rounded-lg shadow-md relative text-2xl font-semibold"
     style={{
-      backgroundImage: `url(${
-        cardInfo?.tier===1 ? engineImages[cardInfo?.engine] : prosImages[cardInfo?.engine]
-      })`,
+      backgroundImage: `url(${imageSrc})`,
       backgroundSize: 'cover',
       backgroundPosition: 'top center',
     }}
