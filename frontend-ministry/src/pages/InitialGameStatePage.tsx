@@ -17,7 +17,7 @@ export default function InitialGameStatePage() {
   const [gameState, setGameState] = useState<string>('Loading board...');
 
   function fetchInitialState() {
-    fetch(init_url)
+    fetch(`${init_url}?get-ascii`)
       .then(res => res.json())
       .then(data => setGameState(data.ascii));
   }
