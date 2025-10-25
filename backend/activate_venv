@@ -1,10 +1,29 @@
 # === Activate virtual environment ===
+
+if ! path=$(which python 2>/dev/null) || [ ! -f "$path" ]; then
+  echo "Python executable not found or broken symlink."
+fi
+
+required_version=$(cat .python-version)
+python_version=$(python --version 2>&1 | awk '{print $2}')
+
+if [ "$python_version" != "$required_version" ]; then
+    echo "❌ Python $required_version required (found $python_version)."
+    echo "ℹ️  Try install pyenv to manage your Python version."
+    exit 1
+fi
+
+if [ ! -d "venv/" ]; then
+    echo "🔍 No venv directory found. Creating venv..."
+    python -m venv venv
+fi
+
 if [ -f "venv/bin/activate" ]; then
     source venv/bin/activate
 elif [ -f "venv/Scripts/activate" ]; then
     source venv/Scripts/activate
 else
-    echo "❌ Can't find virtual environment at ./venv"
+    echo "❌ Can't find virtual environment at ./venv. Are your files missing?"
     exit 1
 fi
 
