@@ -1,10 +1,10 @@
-interface CardFooterProps {
+interface PageProps {
   cardNumber: number;
   maxCardNumber: number;
   setCardNumber: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function CardFooter({ cardNumber, maxCardNumber, setCardNumber }: CardFooterProps) {
+export default function CardPageFooter({ cardNumber, maxCardNumber, setCardNumber }: PageProps) {
   const handlePrev = () => setCardNumber((prev) => Math.max(1, prev - 1));
   const handleNext = () => setCardNumber((prev) => Math.min(maxCardNumber, prev + 1));
 

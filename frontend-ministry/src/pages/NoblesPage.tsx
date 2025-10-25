@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CardNavigator } from '@/components/CardNavigator';
 import NobleCard from '@/components/NobleCard';
-import CardFooter from '@/components/CardFooter';
+import CardFooter from '@/components/CardPageFooter';
 
 export default function CardsPage() {
   const navigate = useNavigate();

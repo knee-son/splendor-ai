@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CardNavigator } from '@/components/CardNavigator';
 import EngineCard from '@/components/EngineCard';
-import CardFooter from '@/components/CardFooter';
+import CardFooter from '@/components/CardPageFooter';
 import CardPageScrollbar from '@/components/CardPageScrollbar';
 
 export default function CardsPage() {
