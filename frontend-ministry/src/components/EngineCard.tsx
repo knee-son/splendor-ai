@@ -73,7 +73,8 @@ export default function EngineCard({ cardInfo }: CardProps) {
               </div>
             );
           })
-        }</div>
+        }
+      </div>
     </div>
   </div>
   );
