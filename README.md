@@ -13,7 +13,7 @@ i've been losing too much on this game so i'll train AI to train me to get bette
 
 ## buildout
 ### on `backend`
-- `python14 -m venv venv`
+- `source ./activate_venv`
 - `pip install -r requirements.txt`
 - `cp .env.example .env`
 - run using `./serve`
