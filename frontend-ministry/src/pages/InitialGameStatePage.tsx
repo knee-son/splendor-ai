@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import type { Card, Noble } from "@/types/splendor";
-// import NobleCard from '@/components/NobleCard';
-// import EngineCard from '@/components/NobleCard';
+import NobleCard from "@/components/NobleCard";
+import EngineCard from "@/components/NobleCard";
 
 export default function InitialGameStatePage() {
   const navigate = useNavigate();
