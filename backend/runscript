@@ -5,5 +5,5 @@
 # example:
 # ./runscript downscale_images
 
-source ./activate_venv
+source ./activate-venv
 python ./scripts/$1.py

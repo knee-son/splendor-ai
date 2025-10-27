@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# create venv, make sure we install all requirements
+# including the most important library, pre-commit.
+# pre-commit runs on each git commit, both on FE/ & BE/
+
+cd backend/
+
+if [ -d "venv/" ]; then
+    echo "Found existing venv. Will rewrite venv..."
+    rm -rf venv/
+else
+    echo "No venv directory found. Creating new venv..."
+fi
+
+python -m venv venv
+source activate-venv
+
+echo "Installing backend dependencies..."
+pip install -r requirements.txt
+
+# checks if pip install worked
+if $?; then
+    echo "Python failed to install all dependencies. Stopping this script..."
+    exit 1
+fi
+
+# use pre-commit's power to install hooks on the .git/ directory
+pre-commit install
+
+# all is done for the backend; switch to root dir
+cd ../
+
+# npm install frontend
+echo "Installing frontend dependencies..."
+cd frontend-ministry/
+npm install
+cd ../
+
+# TODO: add emojis because they're cute (need Windows 11 or Ubuntu)

@@ -1,17 +1,21 @@
 asttokens==3.0.0
 blinker==1.9.0
+cfgv==3.4.0
 click==8.3.0
 cloudpickle==3.1.1
 colorama==0.4.6
 comm==0.2.3
 debugpy==1.8.17
 decorator==5.2.1
+distlib==0.4.0
 dotenv==0.9.9
 executing==2.2.1
 Farama-Notifications==0.0.4
+filelock==3.20.0
 Flask==3.1.2
 flask-cors==6.0.1
 gymnasium==1.2.1
+identify==2.6.15
 ipykernel==7.0.1
 ipython==9.6.0
 ipython_pygments_lexers==1.1.1
@@ -23,6 +27,7 @@ jupyter_core==5.9.1
 MarkupSafe==3.0.3
 matplotlib-inline==0.1.7
 nest-asyncio==1.6.0
+nodeenv==1.9.1
 numpy==2.3.4
 packaging==25.0
 pandas==2.3.3
@@ -30,6 +35,7 @@ parso==0.8.5
 pathlib==1.0.1
 pillow==12.0.0
 platformdirs==4.5.0
+pre_commit==4.3.0
 prompt_toolkit==3.0.52
 psutil==7.1.0
 pure_eval==0.2.3
@@ -37,6 +43,7 @@ Pygments==2.19.2
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.1
 pytz==2025.2
+PyYAML==6.0.3
 pyzmq==27.1.0
 six==1.17.0
 stack-data==0.6.3
@@ -44,5 +51,6 @@ tornado==6.5.2
 traitlets==5.14.3
 typing_extensions==4.15.0
 tzdata==2025.2
+virtualenv==20.35.3
 wcwidth==0.2.14
 Werkzeug==3.1.3

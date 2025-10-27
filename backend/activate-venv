@@ -9,13 +9,8 @@ python_version=$(python --version 2>&1 | awk '{print $2}')
 
 if [ "$python_version" != "$required_version" ]; then
     echo "❌ Python $required_version required (found $python_version)."
-    echo "ℹ️  Try install pyenv to manage your Python version."
+    echo "ℹ️  Try installing pyenv to manage your Python version."
     exit 1
-fi
-
-if [ ! -d "venv/" ]; then
-    echo "🔍 No venv directory found. Creating venv..."
-    python -m venv venv
 fi
 
 if [ -f "venv/bin/activate" ]; then
