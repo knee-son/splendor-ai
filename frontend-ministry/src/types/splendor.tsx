@@ -1,4 +1,4 @@
-export type GemType = 'diamond' | 'emerald' | 'ruby' | 'sapphire' | 'onyx';
+export type GemType = "diamond" | "emerald" | "ruby" | "sapphire" | "onyx";
 export type Cost = Record<GemType, number>;
 
 export interface Card {

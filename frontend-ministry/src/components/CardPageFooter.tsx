@@ -4,9 +4,14 @@ interface PageProps {
   setCardNumber: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function CardPageFooter({ cardNumber, maxCardNumber, setCardNumber }: PageProps) {
+export default function CardPageFooter({
+  cardNumber,
+  maxCardNumber,
+  setCardNumber,
+}: PageProps) {
   const handlePrev = () => setCardNumber((prev) => Math.max(1, prev - 1));
-  const handleNext = () => setCardNumber((prev) => Math.min(maxCardNumber, prev + 1));
+  const handleNext = () =>
+    setCardNumber((prev) => Math.min(maxCardNumber, prev + 1));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);

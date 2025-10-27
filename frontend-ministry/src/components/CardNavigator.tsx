@@ -12,7 +12,7 @@ export function CardNavigator({ onPrev, onNext, addVertical }: Props) {
       if (e.key === "ArrowLeft") onPrev();
       if (e.key === "ArrowRight") onNext();
       if (e.key === "ArrowUp" && addVertical) onPrev();
-      if (e.key === "ArrowDown"  && addVertical) onNext();
+      if (e.key === "ArrowDown" && addVertical) onNext();
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
