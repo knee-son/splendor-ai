@@ -13,10 +13,10 @@ if [ "$python_version" != "$required_version" ]; then
     exit 1
 fi
 
-if [ -f "venv/bin/activate" ]; then
-    source venv/bin/activate
-elif [ -f "venv/Scripts/activate" ]; then
-    source venv/Scripts/activate
+if [ -f "../venv/bin/activate" ]; then
+    source ../venv/bin/activate
+elif [ -f "../venv/Scripts/activate" ]; then
+    source ../venv/Scripts/activate
 else
     echo "❌ Can't find virtual environment at ./venv. Are your files missing?"
     exit 1

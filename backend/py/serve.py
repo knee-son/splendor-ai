@@ -2,9 +2,9 @@ import json
 import random
 from collections import deque
 
+from core.path_manager import METADATA_DIR
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from path_manager import METADATA_DIR
 
 cards_dir = METADATA_DIR / "cards.json"
 nobles_dir = METADATA_DIR / "nobles.json"
