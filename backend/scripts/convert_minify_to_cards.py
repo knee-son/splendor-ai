@@ -38,10 +38,13 @@ df = assembled
 # sort by tier afterwards
 df.sort_values(by=["tier"], inplace=True)
 
-# mutate 'cost' col
+# mutate 'cost' col by appending JSON costs
 costs_col = df["cost"]
 costs_col = [{costs[i]: cost_row[i] for i in range(5)} for cost_row in costs_col]
 df["cost"] = costs_col
+
+# add index
+df = df.reset_index(names="id")
 
 json_str = df.to_json(orient="records")
 
