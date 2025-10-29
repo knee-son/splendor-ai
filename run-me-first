@@ -19,9 +19,12 @@ source activate-venv
 echo "Installing backend dependencies..."
 pip install -r requirements.txt
 
+echo "Creating backend env..."
+cp .env.example .env
+
 # checks if pip install worked
 if $?; then
-    echo "Python failed to install all dependencies. Stopping this script..."
+    echo "Python failed to install all dependencies! Stopping this script..."
     exit 1
 fi
 
@@ -32,9 +35,15 @@ pre-commit install
 cd ../
 
 # npm install frontend
-echo "Installing frontend dependencies..."
 cd frontend-ministry/
+
+echo "Installing frontend dependencies..."
 npm install
+
+echo "Creating backend env..."
+cp .env.example .env
+
 cd ../
 
+echo "All done!"
 # TODO: add emojis because they're cute (need Windows 11 or Ubuntu)

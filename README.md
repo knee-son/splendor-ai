@@ -1,26 +1,33 @@
 ## statement of the problem
-i've been losing too much on this game so i'll train AI to train me to get better at Splendor
+I've been losing too much on this game. So I came up with the idea of training AI to train me to get better at Splendor.
 
-### roadmap
+### Tech Stack
+- VITE React on TypeScript for frontend.
+- FastAPI for communicating with the backend.
+- Homebrew my own ORM and auth (?) if I'd like to deploy this for HvH or HvM.
+- Use Gymnasium API to set up the game environment.
+- CNN would be the initial model for the AI. Would venture to other models if it goes well.
+
+### Roadmap
 - [x] import Splendor cards and nobles data
     - [x] cross-check cards with visuals
 - [ ] compose game structure and rules
     - [ ] present initial game states
     - [ ] validate some game states
-- [ ] compose game API
+- [x] compose game API (done-ish)
 - [ ] make AI model
 - [ ] train
+- [ ] also do some unit tests 'cause every good boy does that
 
 ## buildout
+
+### Very first thing to do before starting:
+- please run `./run-me-first` to install stuff for first time use.
+
 ### on `backend`
-- `source ./activate_venv`
-- `pip install -r requirements.txt`
-- `cp .env.example .env`
 - run using `./serve`
 
 ### on `frontend-ministry`
-- `npm i`
-- `cp .env.example .env`
 - run using `npm run dev`
 
 ## cards_minified.json
