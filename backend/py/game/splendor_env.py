@@ -7,33 +7,29 @@ from gymnasium import spaces
 
 with open(METADATA_DIR / "cards.json", "r") as f:
     cards = json.load(f)
-
 with open(METADATA_DIR / "nobles.json", "r") as f:
     nobles = json.load(f)
+
+GEM_TYPES = set([card["engine"] for card in cards])
+
+from itertools import combinations
+
+trips_comb = list(combinations(GEM_TYPES, 3))
 
 
 class SplendorEnv(gym.Env):
     metadata = {"render_modes": ["ansi"]}
 
-    GEM_TYPES = ["diamond", "sapphire", "emerald", "ruby", "onyx"]
-
-    MAX_GEM = 7
-    MAX_GOLD = 5
     NUMBER_OF_PLAYERS = 4
 
     def __init__(self, render_mode=None):
         super().__init__()
         self.player_state_shape = (self.NUMBER_OF_PLAYERS, len(self.GEM_TYPES) + 1)
         self.bank_shape = (len(self.GEM_TYPES),)
-        self.action_space = spaces.Discrete(100)
 
         obs_shape = (self.NUMBER_OF_PLAYERS + 1, len(self.GEM_TYPES) + 1)
 
-        self.action_space = spaces.Discrete(
-            10
-        )  # placeholder (take gems, buy card, etc.)
-
-        observation = {
+        observation_dict = {
             "opponents": [
                 {
                     "diamond_throughput": 0,  # no limit
@@ -79,6 +75,14 @@ class SplendorEnv(gym.Env):
                 },
                 ...,  # 4 nobles total
             ],
+            "bank": {
+                "diamond": 7,
+                "sapphire": 7,
+                "emerald": 7,
+                "ruby": 7,
+                "onyx": 7,
+                "gold": 5,
+            },
         }
 
         self.observation_space = spaces.Box(
@@ -88,25 +92,47 @@ class SplendorEnv(gym.Env):
             dtype=np.int32,
         )
 
-        self.state = np.zeros((10, 10), dtype=np.int8)
-        self.current_player = 0
+        self.action_space = spaces.Discrete(
+            {
+                1  # get_gold
+                + len(GEM_TYPES)  # get gem pair
+                + len(trips_comb)  # get three gems
+                + len(cards) * 3  # buy card | reserve | reserve with gold
+            }
+        )
+
+        self.render_mode = render_mode
+        self.reset()
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
         self.state[:] = 0
         self.current_player = 0
+        self.last_chance = 0
         return self.state, {}
 
     def step(self, action):
-        # Apply action
         reward = 0
-        terminated = False
-        truncated = False
+        done = False
+        observation = np.array([self.position], dtype=np.int32)
+        # info = {'something': 'something something'}
 
-        # Update turn
+        if (
+            self.observation["prestige"] >= 15 or self.last_chance != 0
+        ) and self.last_chance < self.NUMBER_OF_PLAYERS:
+            self.last_chance += 1
+        else:
+            done = True
+
         self.current_player = (self.current_player + 1) % self.NUMBER_OF_PLAYERS
 
-        return self.state
+        return observation, reward, done
+
+    def get_ansi(self):
+        state = self.state
 
     def render(self):
-        print(self.state)
+        print(self.get_ansi())
+
+    def close(self):
+        pass
