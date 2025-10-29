@@ -5,9 +5,12 @@ from collections import deque
 from core.path_manager import METADATA_DIR
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from game.splendor_env import SplendorEnv
 
 cards_dir = METADATA_DIR / "cards.json"
 nobles_dir = METADATA_DIR / "nobles.json"
+
+game_env = None
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173"])
@@ -74,39 +77,42 @@ def get_nobles():
 def get_initial_state():
     payload = {}
 
-    with open(cards_dir, "r") as f:
-        cards = json.load(f)
+    # with open(cards_dir, "r") as f:
+    #     cards = json.load(f)
 
-    with open(nobles_dir, "r") as f:
-        nobles = json.load(f)
+    # with open(nobles_dir, "r") as f:
+    #     nobles = json.load(f)
 
-    random.shuffle(cards)
-    random.shuffle(nobles)
+    # random.shuffle(cards)
+    # random.shuffle(nobles)
 
-    game_nobles = nobles[:5]
+    # game_nobles = nobles[:5]
 
-    CARDS_PER_ROW = 4
+    # CARDS_PER_ROW = 4
 
-    engine_shop = [
-        {
-            "pile": deque([card for card in cards if card["tier"] == 1]),
-            "field": deque([]),
-        },
-        {
-            "pile": deque([card for card in cards if card["tier"] == 2]),
-            "field": deque([]),
-        },
-        {
-            "pile": deque([card for card in cards if card["tier"] == 3]),
-            "field": deque([]),
-        },
-    ]
+    # engine_shop = [
+    #     {
+    #         "pile": deque([card for card in cards if card["tier"] == 1]),
+    #         "field": deque([]),
+    #     },
+    #     {
+    #         "pile": deque([card for card in cards if card["tier"] == 2]),
+    #         "field": deque([]),
+    #     },
+    #     {
+    #         "pile": deque([card for card in cards if card["tier"] == 3]),
+    #         "field": deque([]),
+    #     },
+    # ]
 
-    for tier in engine_shop:
-        while len(tier["field"]) < CARDS_PER_ROW:
-            replenish_card(tier["pile"], tier["field"])
+    # for tier in engine_shop:
+    #     while len(tier["field"]) < CARDS_PER_ROW:
+    #         replenish_card(tier["pile"], tier["field"])
 
-    get_ascii = "get-ascii" in request.args
+    # get_ascii = "get-ascii" in request.args
+
+    game_env = SplendorEnv()
+
     if get_ascii:
         payload["ascii"] = generate_ascii(engine_shop, game_nobles)
 
