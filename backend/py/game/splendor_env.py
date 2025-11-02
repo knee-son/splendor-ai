@@ -1,4 +1,5 @@
 import json
+from itertools import combinations
 
 import gymnasium as gym
 import numpy as np
@@ -10,143 +11,102 @@ with open(METADATA_DIR / "cards.json", "r") as f:
 with open(METADATA_DIR / "nobles.json", "r") as f:
     nobles = json.load(f)
 
-GEM_TYPES = set([card["engine"] for card in cards])
-
-from itertools import combinations
-
-trips_comb = list(combinations(GEM_TYPES, 3))
-
 
 class SplendorEnv(gym.Env):
     metadata = {"render_modes": ["ansi"]}
-    render_mode = metadata["render_modes"][0]
 
+    GEM_TYPES = set([card["engine"] for card in cards])
+    TRIPS_COMB = list(combinations(GEM_TYPES, 3))
     NUMBER_OF_PLAYERS = 4
+    NUM_TIERS = 3
+    CARDS_PER_TIER = 4
 
-    state = {
-        "current_player": 0,
-        # sets to True if one player manages to get 15 prestige
-        "last_chance": False,
-        "players": [
-            {
-                "coins": {
-                    "diamond": 0,
-                    "sapphire": 0,
-                    "emerald": 0,
-                    "ruby": 0,
-                    "onyx": 0,
-                    "gold": 0,
-                },
-                "cards": [],
-                "reserves": [],
-                "nobles": [],
-                "prestige": 0,
-            }
-        ]
-        * NUMBER_OF_PLAYERS,
-        "nobles": [],  # identifier is nobles' name
-        # expose card info to our human-readable API endpoint.
-        # but for the state, card ID will suffice
-        "cards": [
-            {
-                "t3": {
-                    "pile": [],  # now use card IDs here
-                    "revealed": [],  # ...and here
-                }
-            },
-            {"t2": {"pile": [], "revealed": []}},
-            {"t1": {"pile": [], "revealed": []}},
-        ],
-        "bank": {
-            "diamond": 0,
-            "sapphire": 0,
-            "emerald": 0,
-            "ruby": 0,
-            "onyx": 0,
-            "gold": 0,
-        },
-    }
-
-    def __init__(self, render_mode=None):
+    def __init__(self, render_mode=metadata["render_modes"][0]):
         super().__init__()
 
-        observation_dict = {
-            "opponents": [
-                {
-                    "diamond_throughput": 0,  # no limit
-                    "sapphire_throughput": 0,  # no limit
-                    "emerald_throughput": 0,  # no limit
-                    "ruby_throughput": 0,  # no limit
-                    "onyx_throughput": 0,  # no limit
-                    "diamond_tokens": 0,  # until 7
-                    "sapphire_tokens": 0,  # until 7
-                    "emerald_tokens": 0,  # until 7
-                    "ruby_tokens": 0,  # until 7
-                    "onyx_tokens": 0,  # until 7
-                    "gold_tokens": 0,  # until 5
-                    "reserves": 0,  # until 3
-                    "prestige": 0,
+        self.observation_space = spaces.Dict(
+            {
+                "opponents": [
+                    {
+                        "diamond_throughput": 0,  # no limit
+                        "sapphire_throughput": 0,  # no limit
+                        "emerald_throughput": 0,  # no limit
+                        "ruby_throughput": 0,  # no limit
+                        "onyx_throughput": 0,  # no limit
+                        "diamond_tokens": 0,  # until 7
+                        "sapphire_tokens": 0,  # until 7
+                        "emerald_tokens": 0,  # until 7
+                        "ruby_tokens": 0,  # until 7
+                        "onyx_tokens": 0,  # until 7
+                        "gold_tokens": 0,  # until 5
+                        "reserves": 0,  # until 3
+                        "prestige": 0,
+                    },
+                    ...,  # three opponents total
+                ],
+                "shop": [
+                    {
+                        "diamond_throughput": 0,
+                        "sapphire_throughput": 0,
+                        "emerald_throughput": 0,
+                        "ruby_throughput": 0,
+                        "onyx_throughput": 0,
+                        "diamond_cost": 0,
+                        "sapphire_cost": 0,
+                        "emerald_cost": 0,
+                        "ruby_cost": 0,
+                        "onyx_cost": 0,
+                        "prestige": 0,
+                    },
+                    ...,  # up to 12 cards to purchase from
+                ],
+                "nobles": [
+                    {
+                        "diamond_cost": 0,
+                        "sapphire_cost": 0,
+                        "emerald_cost": 0,
+                        "ruby_cost": 0,
+                        "onyx_cost": 0,
+                    },
+                    ...,  # 4 nobles total
+                ],
+                "bank": {
+                    "diamond": 7,
+                    "sapphire": 7,
+                    "emerald": 7,
+                    "ruby": 7,
+                    "onyx": 7,
+                    "gold": 5,
                 },
-                ...,  # three opponents total
-            ],
-            "shop": [
-                {
-                    "diamond_throughput": 0,
-                    "sapphire_throughput": 0,
-                    "emerald_throughput": 0,
-                    "ruby_throughput": 0,
-                    "onyx_throughput": 0,
-                    "diamond_cost": 0,
-                    "sapphire_cost": 0,
-                    "emerald_cost": 0,
-                    "ruby_cost": 0,
-                    "onyx_cost": 0,
-                    "prestige": 0,
-                },
-                ...,  # up to 12 cards to purchase from
-            ],
-            "nobles": [
-                {
-                    "diamond_cost": 0,
-                    "sapphire_cost": 0,
-                    "emerald_cost": 0,
-                    "ruby_cost": 0,
-                    "onyx_cost": 0,
-                    "prestige": 0,
-                },
-                ...,  # 4 nobles total
-            ],
-            "bank": {
-                "diamond": 7,
-                "sapphire": 7,
-                "emerald": 7,
-                "ruby": 7,
-                "onyx": 7,
-                "gold": 5,
-            },
-        }
-
-        # self.observation_space = spaces.Box(
-        #     ...
-        # )
+            }
+        )
 
         self.action_space = spaces.Discrete(
             1  # get_gold
-            + len(GEM_TYPES)  # get gem pair
-            + len(trips_comb)  # get three gems
+            + len(self.GEM_TYPES)  # get gem pair
+            + len(self.TRIPS_COMB)  # get three gems
             # actions for getting cards. 3 rows, 4 columns
             # buy card | reserve | reserve with gold
-            + 3 * 4 * 3
+            + self.NUM_TIERS * self.CARDS_PER_TIER * 3
         )
 
         self.render_mode = render_mode
 
-        print(self.render_mode)
         self.reset()
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
-        return self.state, {}
+        self.np_random, _ = gym.utils.seeding.np_random(seed)
+
+        self.cards = cards.copy()
+        self.np_random.shuffle(self.cards)
+
+        self.nobles = nobles.copy()
+        self.np_random.shuffle(self.nobles)
+
+        self.state = self._get_initial_state()
+
+        return self.state
 
     def step(self, action):
         reward = 0
@@ -163,6 +123,58 @@ class SplendorEnv(gym.Env):
         self.current_player = (self.current_player + 1) % self.NUMBER_OF_PLAYERS
 
         return observation, reward, done
+
+    def _reveal_card(self, key):
+        top_card = self.state["cards"][key]["pile"].pop()
+        self.state["cards"][key]["revealed"].insert(top_card)
+
+    def _get_initial_state(self):
+        state = {
+            "current_player": 0,
+            # sets to True if one player manages to get 15 prestige
+            "last_chance": False,
+            "players": [
+                {
+                    "coins": {
+                        "diamond": 0,
+                        "sapphire": 0,
+                        "emerald": 0,
+                        "ruby": 0,
+                        "onyx": 0,
+                        "gold": 0,
+                    },
+                    "cards": [],
+                    "reserves": [],
+                    "nobles": [],
+                    "prestige": 0,
+                }
+            ]
+            * self.NUMBER_OF_PLAYERS,
+            "nobles": self.nobles[:4],
+            "cards": [
+                {"t3": {"pile": [], "revealed": []}},
+                {"t2": {"pile": [], "revealed": []}},
+                {"t1": {"pile": [], "revealed": []}},
+            ],
+            "bank": {
+                "diamond": 7,
+                "sapphire": 7,
+                "emerald": 7,
+                "ruby": 7,
+                "onyx": 7,
+                "gold": 5,
+            },
+        }
+
+        # populate cards for each row, then move top cards
+        for i in range(self.NUM_TIERS):
+            key = f"t{i+1}"
+
+            self.state["cards"][key] = self.cards.filter(lambda card: card["tier"] == 1)
+            for _ in range(self.CARDS_PER_TIER):
+                self._reveal_card(key)
+
+        return state
 
     def get_ansi(self):
         RESET = "\033[0m"
