@@ -19,15 +19,56 @@ trips_comb = list(combinations(GEM_TYPES, 3))
 
 class SplendorEnv(gym.Env):
     metadata = {"render_modes": ["ansi"]}
+    render_mode = metadata["render_modes"][0]
 
     NUMBER_OF_PLAYERS = 4
 
+    state = {
+        "current_player": 0,
+        # sets to True if one player manages to get 15 prestige
+        "last_chance": False,
+        "players": [
+            {
+                "coins": {
+                    "diamond": 0,
+                    "sapphire": 0,
+                    "emerald": 0,
+                    "ruby": 0,
+                    "onyx": 0,
+                    "gold": 0,
+                },
+                "cards": [],
+                "reserves": [],
+                "nobles": [],
+                "prestige": 0,
+            }
+        ]
+        * NUMBER_OF_PLAYERS,
+        "nobles": [],  # identifier is nobles' name
+        # expose card info to our human-readable API endpoint.
+        # but for the state, card ID will suffice
+        "cards": [
+            {
+                "t3": {
+                    "pile": [],  # now use card IDs here
+                    "revealed": [],  # ...and here
+                }
+            },
+            {"t2": {"pile": [], "revealed": []}},
+            {"t1": {"pile": [], "revealed": []}},
+        ],
+        "bank": {
+            "diamond": 0,
+            "sapphire": 0,
+            "emerald": 0,
+            "ruby": 0,
+            "onyx": 0,
+            "gold": 0,
+        },
+    }
+
     def __init__(self, render_mode=None):
         super().__init__()
-        self.player_state_shape = (self.NUMBER_OF_PLAYERS, len(self.GEM_TYPES) + 1)
-        self.bank_shape = (len(self.GEM_TYPES),)
-
-        obs_shape = (self.NUMBER_OF_PLAYERS + 1, len(self.GEM_TYPES) + 1)
 
         observation_dict = {
             "opponents": [
@@ -85,37 +126,32 @@ class SplendorEnv(gym.Env):
             },
         }
 
-        self.observation_space = spaces.Box(
-            low=0,
-            high=20,
-            shape=obs_shape,
-            dtype=np.int32,
-        )
+        # self.observation_space = spaces.Box(
+        #     ...
+        # )
 
         self.action_space = spaces.Discrete(
-            {
-                1  # get_gold
-                + len(GEM_TYPES)  # get gem pair
-                + len(trips_comb)  # get three gems
-                + len(cards) * 3  # buy card | reserve | reserve with gold
-            }
+            1  # get_gold
+            + len(GEM_TYPES)  # get gem pair
+            + len(trips_comb)  # get three gems
+            # actions for getting cards. 3 rows, 4 columns
+            # buy card | reserve | reserve with gold
+            + 3 * 4 * 3
         )
 
         self.render_mode = render_mode
+
+        print(self.render_mode)
         self.reset()
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
-        self.state[:] = 0
-        self.current_player = 0
-        self.last_chance = 0
         return self.state, {}
 
     def step(self, action):
         reward = 0
         done = False
         observation = np.array([self.position], dtype=np.int32)
-        # info = {'something': 'something something'}
 
         if (
             self.observation["prestige"] >= 15 or self.last_chance != 0
@@ -129,6 +165,19 @@ class SplendorEnv(gym.Env):
         return observation, reward, done
 
     def get_ansi(self):
+        RESET = "\033[0m"
+        DIAMOND = "\033[97m"
+        RUBY = "\033[91m"
+        SAPPHIRE = "\033[94m"
+        ONYX = "\033[90m"
+        EMERALD = "\033[92m"
+
+        print(f"{DIAMOND}♦ Diamond{RESET}")
+        print(f"{RUBY}♦ Ruby{RESET}")
+        print(f"{SAPPHIRE}♦ Sapphire{RESET}")
+        print(f"{ONYX}♦ Onyx{RESET}")
+        print(f"{EMERALD}♦ Emerald{RESET}")
+
         state = self.state
 
     def render(self):
