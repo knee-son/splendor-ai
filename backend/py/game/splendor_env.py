@@ -28,8 +28,15 @@ class SplendorEnv(Env):
 
         CARDS = self.NUM_TIERS * self.CARDS_PER_TIER
         GEMS = len(self.GEM_TYPES)
-        MAX_CARD_PRESTIGE = max([card["prestige"] for card in cards])
         OPPONENTS = self.NUM_PLAYERS - 1
+
+        MAX_CARD_PRESTIGE = max([card["prestige"] for card in cards])
+        MAX_CARD_COST = max(
+            [engine for noble in nobles for engine in noble["cost"].values()]
+        )
+        MAX_NOBLE_COST = max(
+            [engine for card in cards for engine in card["cost"].values()]
+        )
 
         # "why not use spaces.Discrete instead of Box?"
         # because NNs don't expect integers as input,
@@ -40,10 +47,10 @@ class SplendorEnv(Env):
                 "player_throughput": spaces.Box(
                     low=0, high=10, shape=(GEMS,), dtype=np.int32
                 ),
-                "player_coins": spaces.Box(
+                "player_gem_coins": spaces.Box(
                     low=0, high=7, shape=(GEMS,), dtype=np.int32
                 ),
-                "player_gold_tokens": spaces.Box(
+                "player_gold_coins": spaces.Box(
                     low=0, high=5, shape=(1,), dtype=np.int32
                 ),
                 "player_reserves": spaces.Box(
@@ -55,7 +62,7 @@ class SplendorEnv(Env):
                 "opponents_throughput": spaces.Box(
                     low=0, high=10, shape=(OPPONENTS, GEMS), dtype=np.int32
                 ),
-                "opponents_coins": spaces.Box(
+                "opponents_gem_coins": spaces.Box(
                     low=0, high=7, shape=(OPPONENTS, GEMS), dtype=np.int32
                 ),
                 "opponents_gold_coins": spaces.Box(
@@ -68,18 +75,22 @@ class SplendorEnv(Env):
                     low=0, high=25, shape=(OPPONENTS,), dtype=np.int32
                 ),
                 "shop_throughput": spaces.Box(
-                    low=0, high=10, shape=(CARDS, GEMS), dtype=np.int32
+                    low=0, high=GEMS - 1, shape=(CARDS,), dtype=np.int32
                 ),
                 "shop_cost": spaces.Box(
-                    low=0, high=10, shape=(CARDS, GEMS), dtype=np.int32
+                    low=0, high=MAX_CARD_COST, shape=(CARDS, GEMS), dtype=np.int32
                 ),
                 "shop_prestige": spaces.Box(
                     low=0, high=MAX_CARD_PRESTIGE, shape=(CARDS,), dtype=np.int32
                 ),
                 "nobles_cost": spaces.Box(
-                    low=0, high=5, shape=(self.NOBLES, GEMS), dtype=np.int32
+                    low=0,
+                    high=MAX_NOBLE_COST,
+                    shape=(self.NOBLES, GEMS),
+                    dtype=np.int32,
                 ),
-                "bank": spaces.Box(low=0, high=7, shape=(GEMS + 1,), dtype=np.int32),
+                "bank_gems": spaces.Box(low=0, high=7, shape=(GEMS,), dtype=np.int32),
+                "bank_gold": spaces.Box(low=0, high=5, shape=(1,), dtype=np.int32),
             }
         )
 
@@ -90,6 +101,7 @@ class SplendorEnv(Env):
             # actions for getting cards. 3 rows, 4 columns times
             # buy card | reserve | reserve with gold
             + self.NUM_TIERS * self.CARDS_PER_TIER * 3
+            + 1  # pass a turn :)
         )
 
         self.render_mode = render_mode
@@ -118,6 +130,7 @@ class SplendorEnv(Env):
                 self._mill_card(key)
 
         observation = self._get_observation()
+        # assert self.observation_space.contains(observation)
 
         return observation
 
@@ -151,7 +164,8 @@ class SplendorEnv(Env):
             "last_chance": False,
             "players": [
                 {
-                    "coins": {gem: 0 for gem in self.GEM_TYPES},
+                    "coins": {**{gem: 0 for gem in self.GEM_TYPES}, "gold": 0},
+                    "income": {gem: 0 for gem in self.GEM_TYPES},
                     "cards": [],
                     "reserves": [],
                     "nobles": [],
@@ -165,14 +179,7 @@ class SplendorEnv(Env):
                 "t2": {"pile": [], "revealed": []},
                 "t1": {"pile": [], "revealed": []},
             },
-            "bank": {
-                "diamond": 7,
-                "sapphire": 7,
-                "emerald": 7,
-                "ruby": 7,
-                "onyx": 7,
-                "gold": 5,
-            },
+            "bank": {**{gem: 7 for gem in self.GEM_TYPES}, "gold": 5},
         }
 
         return state
@@ -186,32 +193,28 @@ class SplendorEnv(Env):
         opponents = self.state["players"].copy()
         opponents.remove(player)
 
-        from pprint import pprint
-
-        pprint(player)
-        pprint(opponents)
+        bank = self.state["bank"]
 
         observation = {
-            # dear future self, this line is vibe coded and will not work
             "player_throughput": np.array(
-                [player["cards"][g] for g in self.GEM_TYPES], dtype=np.int32
+                [player["income"][g] for g in self.GEM_TYPES], dtype=np.int32
             ),
-            "player_tokens": np.array(
+            "player_gem_coins": np.array(
                 [player["coins"][g] for g in self.GEM_TYPES], dtype=np.int32
             ),
-            "player_gold_tokens": np.array([player["coins"]["gold"]], dtype=np.int32),
+            "player_gold_coins": np.array([player["coins"]["gold"]], dtype=np.int32),
             "player_reserves": np.array([len(player["reserves"])], dtype=np.int32),
             "player_prestige": np.array([player["prestige"]], dtype=np.int32),
             "opponents_throughput": np.array(
+                [[p["income"][g] for g in self.GEM_TYPES] for p in opponents],
+                dtype=np.int32,
+            ),
+            "opponents_gem_coins": np.array(
                 [[p["coins"][g] for g in self.GEM_TYPES] for p in opponents],
                 dtype=np.int32,
             ),
-            "opponents_tokens": np.array(
-                [[p["coins"][g] for g in self.GEM_TYPES] for p in opponents],
-                dtype=np.int32,
-            ),
-            "opponents_gold_tokens": np.array(
-                [p["coins"].get("gold", 0) for p in opponents], dtype=np.int32
+            "opponents_gold_coins": np.array(
+                [p["coins"]["gold"] for p in opponents], dtype=np.int32
             ),
             "opponents_reserves": np.array(
                 [len(p["reserves"]) for p in opponents], dtype=np.int32
@@ -221,9 +224,16 @@ class SplendorEnv(Env):
             ),
             # "shop_throughput": ,
             # "shop_cost": ,
-            # "shop_prestige": ,
-            # "nobles_cost": ,
-            # "bank": ,
+            # "shop_prestige": np.array(
+            #     [card["prestige"] for card in ]
+            #     , dtype=np.int32
+            # ),
+            "nobles_cost": np.array(
+                [g for noble in self.state["nobles"] for g in noble["cost"].values()],
+                dtype=np.int32,
+            ),
+            "bank_gems": np.array([bank[g] for g in self.GEM_TYPES], dtype=np.int32),
+            "bank_gold": np.array(bank["gold"], dtype=np.int32),
         }
 
         return observation
@@ -236,13 +246,15 @@ class SplendorEnv(Env):
         ONYX = "\033[90m"
         EMERALD = "\033[92m"
 
-        print(f"{DIAMOND}♦ Diamond{RESET}")
-        print(f"{RUBY}♦ Ruby{RESET}")
-        print(f"{SAPPHIRE}♦ Sapphire{RESET}")
-        print(f"{ONYX}♦ Onyx{RESET}")
-        print(f"{EMERALD}♦ Emerald{RESET}")
+        text = f"{DIAMOND}♦ Diamond{RESET}\n"
+        f"{RUBY}♦ Ruby{RESET}\n"
+        f"{SAPPHIRE}♦ Sapphire{RESET}\n"
+        f"{ONYX}♦ Onyx{RESET}\n"
+        f"{EMERALD}♦ Emerald{RESET}\n"
 
         state = self.state
+
+        return text
 
     def render(self):
         print(self.get_ansi())
