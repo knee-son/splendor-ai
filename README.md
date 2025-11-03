@@ -24,10 +24,10 @@ I've been losing too much on this game. So I came up with the idea of training A
 ### Very first thing to do before starting:
 - please run `./run-me-first` to install stuff for first time use.
 
-### on `backend`
+### on `backend/`
 - run using `./serve`
 
-### on `frontend-ministry`
+### on `frontend-ministry/`
 - run using `npm run dev`
 
 ## cards_minified.json
