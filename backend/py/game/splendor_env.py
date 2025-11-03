@@ -32,10 +32,10 @@ class SplendorEnv(Env):
 
         MAX_CARD_PRESTIGE = max([card["prestige"] for card in cards])
         MAX_CARD_COST = max(
-            [engine for noble in nobles for engine in noble["cost"].values()]
+            [engine for card in cards for engine in card["cost"].values()]
         )
         MAX_NOBLE_COST = max(
-            [engine for card in cards for engine in card["cost"].values()]
+            [engine for noble in nobles for engine in noble["cost"].values()]
         )
 
         # "why not use spaces.Discrete instead of Box?"
