@@ -1,4 +1,4 @@
-## statement of the problem
+## Splendor AI
 I've been losing too much on this game. So I came up with the idea of training AI to train me to get better at Splendor.
 
 ### Tech Stack
