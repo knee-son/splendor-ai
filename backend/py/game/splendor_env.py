@@ -15,7 +15,8 @@ with open(METADATA_DIR / "nobles.json", "r") as f:
 class SplendorEnv(Env):
     metadata = {"render_modes": ["ansi"]}
 
-    GEM_TYPES = set([card["engine"] for card in cards])
+    # declaring as set seems to generate this in no particular order
+    GEM_TYPES = sorted(set([card["engine"] for card in cards]))
     GEMS = len(GEM_TYPES)
     TRIPS_COMB = list(combinations(GEM_TYPES, 3))
     NUM_PLAYERS = 4
@@ -94,6 +95,7 @@ class SplendorEnv(Env):
             }
         )
 
+        # all actions are discrete
         self.action_space = spaces.Discrete(
             1  # get_gold
             + len(self.GEM_TYPES)  # get gem pair
@@ -130,7 +132,16 @@ class SplendorEnv(Env):
                 self._mill_card(key)
 
         observation = self._get_observation()
-        # assert self.observation_space.contains(observation)
+
+        # from pprint import pprint
+        # pprint(observation)
+
+        keys = list(self.observation_space.keys())
+        print(keys)
+        print([field.shape for field in self.observation_space.values()])
+        print([observation[key].shape for key in keys])
+
+        assert self.observation_space.contains(observation)
 
         return observation
 
@@ -186,31 +197,34 @@ class SplendorEnv(Env):
 
     def _get_observation(self):
         state = self.state
+        GEM_TYPES = self.GEM_TYPES
 
-        player_num = self.state["current_player"]
+        player_num = state["current_player"]
 
-        player = self.state["players"][player_num]
-        opponents = self.state["players"].copy()
+        player = state["players"][player_num]
+        opponents = state["players"].copy()
         opponents.remove(player)
 
-        bank = self.state["bank"]
+        bank = state["bank"]
+
+        shop = [card for tier in state["cards"].values() for card in tier["revealed"]]
 
         observation = {
             "player_throughput": np.array(
-                [player["income"][g] for g in self.GEM_TYPES], dtype=np.int32
+                [player["income"][g] for g in GEM_TYPES], dtype=np.int32
             ),
             "player_gem_coins": np.array(
-                [player["coins"][g] for g in self.GEM_TYPES], dtype=np.int32
+                [player["coins"][g] for g in GEM_TYPES], dtype=np.int32
             ),
             "player_gold_coins": np.array([player["coins"]["gold"]], dtype=np.int32),
             "player_reserves": np.array([len(player["reserves"])], dtype=np.int32),
             "player_prestige": np.array([player["prestige"]], dtype=np.int32),
             "opponents_throughput": np.array(
-                [[p["income"][g] for g in self.GEM_TYPES] for p in opponents],
+                [[p["income"][g] for g in GEM_TYPES] for p in opponents],
                 dtype=np.int32,
             ),
             "opponents_gem_coins": np.array(
-                [[p["coins"][g] for g in self.GEM_TYPES] for p in opponents],
+                [[p["coins"][g] for g in GEM_TYPES] for p in opponents],
                 dtype=np.int32,
             ),
             "opponents_gold_coins": np.array(
@@ -222,18 +236,24 @@ class SplendorEnv(Env):
             "opponents_prestige": np.array(
                 [p["prestige"] for p in opponents], dtype=np.int32
             ),
-            # "shop_throughput": ,
-            # "shop_cost": ,
-            # "shop_prestige": np.array(
-            #     [card["prestige"] for card in ]
-            #     , dtype=np.int32
-            # ),
-            "nobles_cost": np.array(
-                [g for noble in self.state["nobles"] for g in noble["cost"].values()],
+            "shop_throughput": np.array(
+                [GEM_TYPES.index(card["engine"]) for card in shop], dtype=np.int32
+            ),
+            # needs restructure: (60,) => (12, 5)
+            "shop_cost": np.array(
+                [card["cost"][gem] for card in shop for gem in GEM_TYPES],
                 dtype=np.int32,
             ),
-            "bank_gems": np.array([bank[g] for g in self.GEM_TYPES], dtype=np.int32),
-            "bank_gold": np.array(bank["gold"], dtype=np.int32),
+            "shop_prestige": np.array(
+                [card["prestige"] for card in shop], dtype=np.int32
+            ),
+            # needs restructure: (25,) => (5, 5)
+            "nobles_cost": np.array(
+                [g for noble in state["nobles"] for g in noble["cost"].values()],
+                dtype=np.int32,
+            ),
+            "bank_gems": np.array([bank[g] for g in GEM_TYPES], dtype=np.int32),
+            "bank_gold": np.array([bank["gold"]], dtype=np.int32),
         }
 
         return observation
