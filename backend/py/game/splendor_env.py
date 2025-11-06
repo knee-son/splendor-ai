@@ -7,36 +7,36 @@ from gymnasium import Env, spaces
 from gymnasium.utils import seeding
 
 with open(METADATA_DIR / "cards.json", "r") as f:
-    cards = json.load(f)
+    CARDS = json.load(f)
 with open(METADATA_DIR / "nobles.json", "r") as f:
-    nobles = json.load(f)
+    NOBLES = json.load(f)
 
 
 class SplendorEnv(Env):
     metadata = {"render_modes": ["ansi"]}
 
     # declaring as set seems to generate this in no particular order
-    GEM_TYPES = sorted(set([card["engine"] for card in cards]))
+    GEM_TYPES = sorted(set([card["engine"] for card in CARDS]))
     GEMS = len(GEM_TYPES)
     TRIPS_COMB = list(combinations(GEM_TYPES, 3))
     NUM_PLAYERS = 4
     NUM_TIERS = 3
     CARDS_PER_TIER = 4
-    NOBLES = 5
+    NUM_NOBLES = 5
 
     def __init__(self, render_mode=metadata["render_modes"][0]):
         super().__init__()
 
-        CARDS = self.NUM_TIERS * self.CARDS_PER_TIER
+        NUM_CARDS = self.NUM_TIERS * self.CARDS_PER_TIER
         GEMS = len(self.GEM_TYPES)
         OPPONENTS = self.NUM_PLAYERS - 1
 
-        MAX_CARD_PRESTIGE = max([card["prestige"] for card in cards])
+        MAX_CARD_PRESTIGE = max([card["prestige"] for card in CARDS])
         MAX_CARD_COST = max(
-            [engine for card in cards for engine in card["cost"].values()]
+            [engine for card in CARDS for engine in card["cost"].values()]
         )
         MAX_NOBLE_COST = max(
-            [engine for noble in nobles for engine in noble["cost"].values()]
+            [engine for noble in NOBLES for engine in noble["cost"].values()]
         )
 
         # "why not use spaces.Discrete instead of Box?"
@@ -76,18 +76,18 @@ class SplendorEnv(Env):
                     low=0, high=25, shape=(OPPONENTS,), dtype=np.int32
                 ),
                 "shop_throughput": spaces.Box(
-                    low=0, high=GEMS - 1, shape=(CARDS,), dtype=np.int32
+                    low=0, high=GEMS - 1, shape=(NUM_CARDS,), dtype=np.int32
                 ),
                 "shop_cost": spaces.Box(
-                    low=0, high=MAX_CARD_COST, shape=(CARDS, GEMS), dtype=np.int32
+                    low=0, high=MAX_CARD_COST, shape=(NUM_CARDS, GEMS), dtype=np.int32
                 ),
                 "shop_prestige": spaces.Box(
-                    low=0, high=MAX_CARD_PRESTIGE, shape=(CARDS,), dtype=np.int32
+                    low=0, high=MAX_CARD_PRESTIGE, shape=(NUM_CARDS,), dtype=np.int32
                 ),
                 "nobles_cost": spaces.Box(
                     low=0,
                     high=MAX_NOBLE_COST,
-                    shape=(self.NOBLES, GEMS),
+                    shape=(self.NUM_NOBLES, GEMS),
                     dtype=np.int32,
                 ),
                 "bank_gems": spaces.Box(low=0, high=7, shape=(GEMS,), dtype=np.int32),
@@ -114,10 +114,10 @@ class SplendorEnv(Env):
         super().reset(seed=seed)
         self.np_random, _ = seeding.np_random(seed)
 
-        self.cards = cards.copy()
+        self.cards = CARDS.copy()
         self.np_random.shuffle(self.cards)
 
-        self.nobles = nobles.copy()
+        self.nobles = NOBLES.copy()
         self.np_random.shuffle(self.nobles)
 
         self.state = self._get_initial_state()
@@ -134,7 +134,7 @@ class SplendorEnv(Env):
         observation = self._get_observation()
 
         # make sure observation_space shape aligns with our observations
-        # assert self.observation_space.contains(observation)
+        assert self.observation_space.contains(observation)
 
         return observation
 
@@ -177,7 +177,7 @@ class SplendorEnv(Env):
                 }
                 for _ in range(self.NUM_PLAYERS)
             ],
-            "nobles": self.nobles[: self.NOBLES],
+            "nobles": self.nobles[: self.NUM_NOBLES],
             "cards": {
                 "t3": {"pile": [], "revealed": []},
                 "t2": {"pile": [], "revealed": []},
@@ -187,9 +187,6 @@ class SplendorEnv(Env):
         }
 
         return state
-
-    # TODO: implement this
-    def get_human_observable(self): ...
 
     def _get_observation(self):
         state = self.state
@@ -254,6 +251,16 @@ class SplendorEnv(Env):
         }
 
         return observation
+
+    # TODO: implement this
+    def get_human_observation(self):
+        observation = self.state.copy()
+
+        observation["cards"] = {tier for tier in observation}
+
+        from pprint import pprint
+
+        pprint(self.state)
 
     def get_ansi(self):
         RESET = "\033[0m"
