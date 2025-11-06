@@ -1,4 +1,5 @@
 import json
+import re
 from itertools import combinations
 
 import numpy as np
@@ -275,10 +276,13 @@ class SplendorEnv(Env):
 
         return observation
 
-    def get_human_ansi(self): ...
+    def get_human_ansi(self):
+        return self._get_ansi()
 
     # would be just a formatted ansi without the ansi formatting
-    def get_human_ascii(self): ...
+    def get_human_ascii(self):
+        rgx = r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])"
+        return re.compile(rgx).sub("", self.get_human_ansi())
 
     def _get_ansi(self):
         RESET = "\033[0m"
@@ -288,11 +292,13 @@ class SplendorEnv(Env):
         ONYX = "\033[90m"
         EMERALD = "\033[92m"
 
-        text = f"{DIAMOND}♦ Diamond{RESET}\n"
-        f"{RUBY}♦ Ruby{RESET}\n"
-        f"{SAPPHIRE}♦ Sapphire{RESET}\n"
-        f"{ONYX}♦ Onyx{RESET}\n"
-        f"{EMERALD}♦ Emerald{RESET}\n"
+        text = (
+            f"{DIAMOND}♦ Diamond{RESET}\n"
+            f"{RUBY}♦ Ruby{RESET}\n"
+            f"{SAPPHIRE}♦ Sapphire{RESET}\n"
+            f"{ONYX}♦ Onyx{RESET}\n"
+            f"{EMERALD}♦ Emerald{RESET}\n"
+        )
 
         state = self.state
 
