@@ -3,7 +3,8 @@
   - ✅ run assert if the **observation** aligns with the **observation space**
 
 ### now
-- let's do a sidequest and make the game playable for the frontend
+- let's do a little sidequest and make the game playable for the frontend
+- merge `refactor-backend` once we get to see the API successfully return game states
 - deprio anything related with acquiring agents' `_get_observation()`
 
 ---
