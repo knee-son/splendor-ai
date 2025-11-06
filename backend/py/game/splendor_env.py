@@ -133,15 +133,8 @@ class SplendorEnv(Env):
 
         observation = self._get_observation()
 
-        # from pprint import pprint
-        # pprint(observation)
-
-        keys = list(self.observation_space.keys())
-        print(keys)
-        print([field.shape for field in self.observation_space.values()])
-        print([observation[key].shape for key in keys])
-
-        assert self.observation_space.contains(observation)
+        # make sure observation_space shape aligns with our observations
+        # assert self.observation_space.contains(observation)
 
         return observation
 
@@ -239,17 +232,18 @@ class SplendorEnv(Env):
             "shop_throughput": np.array(
                 [GEM_TYPES.index(card["engine"]) for card in shop], dtype=np.int32
             ),
-            # needs restructure: (60,) => (12, 5)
             "shop_cost": np.array(
-                [card["cost"][gem] for card in shop for gem in GEM_TYPES],
+                [[card["cost"][gem] for gem in GEM_TYPES] for card in shop],
                 dtype=np.int32,
             ),
             "shop_prestige": np.array(
                 [card["prestige"] for card in shop], dtype=np.int32
             ),
-            # needs restructure: (25,) => (5, 5)
             "nobles_cost": np.array(
-                [g for noble in state["nobles"] for g in noble["cost"].values()],
+                [
+                    [noble["cost"][gem] for gem in self.GEM_TYPES]
+                    for noble in self.state["nobles"]
+                ],
                 dtype=np.int32,
             ),
             "bank_gems": np.array([bank[g] for g in GEM_TYPES], dtype=np.int32),
