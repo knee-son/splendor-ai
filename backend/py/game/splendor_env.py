@@ -260,11 +260,20 @@ class SplendorEnv(Env):
     def get_human_observation(self):
         observation = self.state.copy()
 
-        observation["cards"] = {tier for tier in observation}
+        for key in observation["cards"]:
+            tier = observation["cards"][key]
+            tier = [card["id"] for card in tier["revealed"]]
+            observation["cards"][key] = tier
 
-        from pprint import pprint
+        observation["nobles"] = [noble["name"] for noble in observation["nobles"]]
 
-        pprint(self.state)
+        for i in range(len(observation["players"])):
+            for card in observation["players"][i]["cards"]:
+                observation["players"][i]["cards"] = card["id"]
+            for noble in observation["players"][i]["nobles"]:
+                observation["players"][i]["nobles"] = noble["name"]
+
+        return observation
 
     def get_human_ansi(self): ...
 
