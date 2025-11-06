@@ -253,6 +253,10 @@ class SplendorEnv(Env):
         return observation
 
     # TODO: implement this
+    # get_human_observation would vary in result given whose perspective it is
+    # i.e. player 1, player 2, etc... would have different vision if this is
+    # a game with some players' cards faced for themselves only. hence,
+    # implement it like this: get_human_observation(self, player: int)
     def get_human_observation(self):
         observation = self.state.copy()
 
@@ -262,7 +266,12 @@ class SplendorEnv(Env):
 
         pprint(self.state)
 
-    def get_ansi(self):
+    def get_human_ansi(self): ...
+
+    # would be just a formatted ansi without the ansi formatting
+    def get_human_ascii(self): ...
+
+    def _get_ansi(self):
         RESET = "\033[0m"
         DIAMOND = "\033[97m"
         RUBY = "\033[91m"
@@ -281,7 +290,7 @@ class SplendorEnv(Env):
         return text
 
     def render(self):
-        print(self.get_ansi())
+        print(self._get_ansi())
 
     def close(self):
         pass
