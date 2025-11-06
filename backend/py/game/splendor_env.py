@@ -188,6 +188,9 @@ class SplendorEnv(Env):
 
         return state
 
+    # TODO: implement this
+    def get_human_observable(self): ...
+
     def _get_observation(self):
         state = self.state
         GEM_TYPES = self.GEM_TYPES
