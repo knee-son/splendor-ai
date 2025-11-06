@@ -252,8 +252,9 @@ class SplendorEnv(Env):
                 [card["prestige"] for card in shop], dtype=np.int32
             ),
             # needs restructure: (25,) => (5, 5)
+            # please try this recent change
             "nobles_cost": np.array(
-                [g for noble in state["nobles"] for g in noble["cost"].values()],
+                [noble["cost"].values() for noble in self.nobles],
                 dtype=np.int32,
             ),
             "bank_gems": np.array([bank[g] for g in GEM_TYPES], dtype=np.int32),
