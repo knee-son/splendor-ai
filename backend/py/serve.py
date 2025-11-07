@@ -9,6 +9,8 @@ cards_dir = METADATA_DIR / "cards.json"
 nobles_dir = METADATA_DIR / "nobles.json"
 
 game_env = None
+game_env = SplendorEnv()
+game_env.render()
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173"])
