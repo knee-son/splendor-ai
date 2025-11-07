@@ -19,7 +19,10 @@ export default function InitialGameStatePage() {
   function fetchInitialState() {
     fetch(`${init_url}?get-ascii`)
       .then((res) => res.json())
-      .then((data) => setGameState(data.ascii));
+      .then((data) => {
+        setGameState(data.ascii);
+        console.log(data.state);
+      });
   }
 
   useEffect(() => {
@@ -52,7 +55,7 @@ export default function InitialGameStatePage() {
       </button>
 
       <div
-        className="bg-[#f5deb3] text-gray-800 font-mono w-6/12 aspect-square flex items-center justify-center p-8 rounded-lg shadow-md max-w-xl text-center border border-amber-700"
+        className="bg-[#f5deb3] text-gray-800 font-mono w-9/12 aspect-square flex items-center justify-center p-8 rounded-lg shadow-md max-w-xl text-center border border-amber-700 text-sm"
         style={{ whiteSpace: "pre-wrap" }}
       >
         {gameState}
