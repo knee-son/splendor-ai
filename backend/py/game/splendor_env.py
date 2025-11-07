@@ -25,6 +25,11 @@ class SplendorEnv(Env):
     CARDS_PER_TIER = 4
     NUM_NOBLES = 5
 
+    MAX_CARD_COST = max([engine for card in CARDS for engine in card["cost"].values()])
+    MAX_NOBLE_COST = max(
+        [engine for noble in NOBLES for engine in noble["cost"].values()]
+    )
+
     def __init__(self, render_mode=metadata["render_modes"][0]):
         super().__init__()
 
@@ -33,12 +38,6 @@ class SplendorEnv(Env):
         OPPONENTS = self.NUM_PLAYERS - 1
 
         MAX_CARD_PRESTIGE = max([card["prestige"] for card in CARDS])
-        MAX_CARD_COST = max(
-            [engine for card in CARDS for engine in card["cost"].values()]
-        )
-        MAX_NOBLE_COST = max(
-            [engine for noble in NOBLES for engine in noble["cost"].values()]
-        )
 
         # "why not use spaces.Discrete instead of Box?"
         # because NNs don't expect integers as input,
@@ -80,14 +79,17 @@ class SplendorEnv(Env):
                     low=0, high=GEMS - 1, shape=(NUM_CARDS,), dtype=np.int32
                 ),
                 "shop_cost": spaces.Box(
-                    low=0, high=MAX_CARD_COST, shape=(NUM_CARDS, GEMS), dtype=np.int32
+                    low=0,
+                    high=self.MAX_CARD_COST,
+                    shape=(NUM_CARDS, GEMS),
+                    dtype=np.int32,
                 ),
                 "shop_prestige": spaces.Box(
                     low=0, high=MAX_CARD_PRESTIGE, shape=(NUM_CARDS,), dtype=np.int32
                 ),
                 "nobles_cost": spaces.Box(
                     low=0,
-                    high=MAX_NOBLE_COST,
+                    high=self.MAX_NOBLE_COST,
                     shape=(self.NUM_NOBLES, GEMS),
                     dtype=np.int32,
                 ),
@@ -277,7 +279,41 @@ class SplendorEnv(Env):
         return observation
 
     def get_human_ansi(self):
-        return self._get_ansi()
+        colors = {
+            "reset": "\033[0m",
+            "diamond": "\033[97m",
+            "ruby": "\033[91m",
+            "sapphire": "\033[94m",
+            "onyx": "\033[90m",
+            "emerald": "\033[92m",
+        }
+
+        COLS = 64
+
+        state = self.state
+
+        nobles = "".join(f"|{n['name'].upper():^10}|" for n in state["nobles"])
+
+        w = self.MAX_CARD_COST // 2
+        cards = [
+            f"[{len(t['pile'])}]  "
+            + " ".join(
+                f"|{c['id']:<{w}}{('♦'+str(c['prestige'])) if c['prestige'] else '':>{w}}|"
+                for c in t["revealed"]
+            )
+            for t in state["cards"].values()
+        ]
+
+        print(len(cards[0]))
+
+        return "\n".join(
+            line.center(COLS)
+            for line in [
+                nobles,
+                "",
+                *cards,
+            ]
+        )
 
     # would be just a formatted ansi without the ansi formatting
     def get_human_ascii(self):
