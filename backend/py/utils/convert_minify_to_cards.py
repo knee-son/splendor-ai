@@ -3,7 +3,7 @@
 import json
 
 import pandas
-from path_manager import METADATA_DIR
+from core.path_manager import METADATA_DIR
 
 cards_input = METADATA_DIR / "cards_minified.json"
 cards_output = METADATA_DIR / "cards.json"

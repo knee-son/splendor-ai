@@ -6,4 +6,4 @@
 # ./runscript downscale_images
 
 source ./activate-venv
-python ./scripts/$1.py
+python ./py/$1.py
