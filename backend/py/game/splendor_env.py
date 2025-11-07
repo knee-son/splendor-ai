@@ -278,7 +278,36 @@ class SplendorEnv(Env):
 
         return observation
 
-    def get_human_ansi(self):
+    # would be just a formatted ansi without the ansi formatting
+    def get_human_ascii(self):
+        COLS = 64
+
+        state = self.state
+
+        nobles = "".join(f"|{n['name'].upper():^10}|" for n in state["nobles"])
+
+        w = self.MAX_CARD_COST // 2
+        cards = [
+            f"[{len(t['pile'])}]  "
+            + " ".join(
+                f"|{c['id']:<{w}}{('♦'+str(c['prestige'])) if c['prestige'] else '':>{w}}|"
+                for c in t["revealed"]
+            )
+            for t in state["cards"].values()
+        ]
+
+        print(self._get_ansi())
+
+        return "\n".join(
+            line.center(COLS)
+            for line in [
+                nobles,
+                "",
+                *cards,
+            ]
+        )
+
+    def _get_ansi(self):
         colors = {
             "reset": "\033[0m",
             "diamond": "\033[97m",
@@ -296,9 +325,9 @@ class SplendorEnv(Env):
 
         w = self.MAX_CARD_COST // 2
         cards = [
-            f"[{len(t['pile'])}]  "
+            f"{' '*11}[{len(t['pile'])}]  "
             + " ".join(
-                f"|{c['id']:<{w}}{('♦'+str(c['prestige'])) if c['prestige'] else '':>{w}}|"
+                f"|{colors[c['engine']]}{c['id']:<{w}}{('♦'+str(c['prestige'])) if c['prestige'] else '':>{w}}{colors['reset']}|"
                 for c in t["revealed"]
             )
             for t in state["cards"].values()
@@ -314,31 +343,6 @@ class SplendorEnv(Env):
                 *cards,
             ]
         )
-
-    # would be just a formatted ansi without the ansi formatting
-    def get_human_ascii(self):
-        rgx = r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])"
-        return re.compile(rgx).sub("", self.get_human_ansi())
-
-    def _get_ansi(self):
-        RESET = "\033[0m"
-        DIAMOND = "\033[97m"
-        RUBY = "\033[91m"
-        SAPPHIRE = "\033[94m"
-        ONYX = "\033[90m"
-        EMERALD = "\033[92m"
-
-        text = (
-            f"{DIAMOND}♦ Diamond{RESET}\n"
-            f"{RUBY}♦ Ruby{RESET}\n"
-            f"{SAPPHIRE}♦ Sapphire{RESET}\n"
-            f"{ONYX}♦ Onyx{RESET}\n"
-            f"{EMERALD}♦ Emerald{RESET}\n"
-        )
-
-        state = self.state
-
-        return text
 
     def render(self):
         print(self._get_ansi())
