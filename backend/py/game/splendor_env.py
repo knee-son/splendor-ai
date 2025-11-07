@@ -321,25 +321,66 @@ class SplendorEnv(Env):
 
         state = self.state
 
-        nobles = "".join(f"|{n['name'].upper():^10}|" for n in state["nobles"])
+        nobles = "".join(f"|{n['name'].upper():<10}|" for n in state["nobles"])
+
+        costs = [noble["cost"] for noble in state["nobles"]]
+        flat_costs = [[{k: v} for k, v in cost.items() if v] for cost in costs]
+        max_len = max(len(row) for row in flat_costs)
+        padded = [row + [None] * (max_len - len(row)) for row in flat_costs]
+        rotated = list(zip(*padded))
+        noble_costs = [
+            "".join(
+                [
+                    "|"
+                    + colors[list(c)[0]]
+                    + f"{'♦'*list(c.values())[0]:<10}"
+                    + colors["reset"]
+                    + "|"
+                    for c in row
+                    if c
+                ]
+            )
+            for row in rotated
+        ]
 
         w = self.MAX_CARD_COST // 2
         cards = [
-            f"{' '*11}[{len(t['pile'])}]  "
-            + " ".join(
-                f"|{colors[c['engine']]}{c['id']:<{w}}{('♦'+str(c['prestige'])) if c['prestige'] else '':>{w}}{colors['reset']}|"
+            f"{'    '}[{len(t['pile']):>2}]  "
+            + "  ".join(
+                f"| {colors[c['engine']]}{c['id']:<{w}}{('◆'+str(c['prestige'])) if c['prestige'] else '':>{w}}{colors['reset']} |"
                 for c in t["revealed"]
             )
             for t in state["cards"].values()
         ]
 
-        print(len(cards[0]))
+        bank = "Bank:"
+
+        players = [
+            "".join(
+                [
+                    f"{'Player '+str(i+1)+' ('+str(p['prestige'])+')':<16}"
+                    for i, p in enumerate(state["players"])
+                ]
+            )
+        ]
+        players.append("".join([f"{'cards':<16}"] * self.NUM_PLAYERS))
+        players.append("".join([f"{'nobles':<16}"] * self.NUM_PLAYERS))
+        players.append("".join([f"{'reserves':<16}"] * self.NUM_PLAYERS))
+        players.append("".join([f"{'coins':<16}"] * self.NUM_PLAYERS))
 
         return "\n".join(
-            line.center(COLS)
-            for line in [
-                nobles,
+            [
+                f"It's currently player {state['current_player']+1}'s turn.",
                 "",
+                *players,
+                "",
+                "Nobles:",
+                nobles,
+                *noble_costs,
+                "",
+                bank,
+                "",
+                "Shop:",
                 *cards,
             ]
         )
