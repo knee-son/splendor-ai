@@ -29,8 +29,8 @@ def get_nobles():
         return jsonify(json.load(f))
 
 
-@app.route("/initial-state")
-def get_initial_state():
+@app.route("/setup")
+def setup_board():
     payload = {}
 
     game_env = SplendorEnv()
