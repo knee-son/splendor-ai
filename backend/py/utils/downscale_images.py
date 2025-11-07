@@ -4,10 +4,8 @@ import os
 
 from PIL import Image
 
-input_dir = "../frontend-ministry/src/assets/images/hi-res/"
-output_dir = "../frontend-ministry/src/assets/images/"
-
-print(os.listdir("../frontend-ministry/src/assets/images/hi-res/"))
+input_dir = "../../frontend-ministry/src/assets/images/hi-res/"
+output_dir = "../../frontend-ministry/src/assets/images/"
 
 WIDTH = 300
 HEIGHT = 450
