@@ -321,7 +321,7 @@ class SplendorEnv(Env):
 
         state = self.state
 
-        nobles = "".join(f"|{n['name'].upper():<10}|" for n in state["nobles"])
+        nobles = " ".join(f"|{n['name'].upper():<9}|" for n in state["nobles"])
 
         costs = [noble["cost"] for noble in state["nobles"]]
         flat_costs = [[{k: v} for k, v in cost.items() if v] for cost in costs]
@@ -329,15 +329,16 @@ class SplendorEnv(Env):
         padded = [row + [None] * (max_len - len(row)) for row in flat_costs]
         rotated = list(zip(*padded))
         noble_costs = [
-            "".join(
+            " ".join(
                 [
-                    "|"
+                    f"|"
                     + colors[list(c)[0]]
-                    + f"{'♦'*list(c.values())[0]:<10}"
+                    + f"{list(c.values())[0]} "
+                    + f"{'♦'*list(c.values())[0]:<7}"
                     + colors["reset"]
                     + "|"
+                    if c else "|"+" "*9+"|"
                     for c in row
-                    if c
                 ]
             )
             for row in rotated
@@ -345,7 +346,7 @@ class SplendorEnv(Env):
 
         w = self.MAX_CARD_COST // 2
         cards = [
-            f"{'    '}[{len(t['pile']):>2}]  "
+            f" [{len(t['pile']):>2} left]  "
             + "  ".join(
                 f"| {colors[c['engine']]}{c['id']:<{w}}{('◆'+str(c['prestige'])) if c['prestige'] else '':>{w}}{colors['reset']} |"
                 for c in t["revealed"]

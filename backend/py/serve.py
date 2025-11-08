@@ -37,12 +37,8 @@ def setup_board():
 
     game_env = SplendorEnv()
 
-    # TODO: implement get_ascii()
     if "get-ascii" in request.args:
         payload["ascii"] = game_env.get_human_ascii()
-
-    if "get-ansi" in request.args:
-        payload["ansi"] = game_env.get_human_ansi()
 
     payload["state"] = game_env.state
 

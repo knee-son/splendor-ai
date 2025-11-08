@@ -33,4 +33,4 @@ I've been losing too much on this game. So I came up with the idea of training A
 ## cards_minified.json
 ### source https://www.scribd.com/document/534963546/Splendor-Card-List-With-Pics
 ### conversion
-**cards_minified.json** >>  `python scripts/convert_minify_to_cards.py` > **cards.json**
+**cards_minified.json** >>  `python scripts/generate_cards_json.py` > **cards.json**
