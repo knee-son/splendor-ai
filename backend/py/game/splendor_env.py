@@ -331,13 +331,16 @@ class SplendorEnv(Env):
         noble_costs = [
             " ".join(
                 [
-                    f"|"
-                    + colors[list(c)[0]]
-                    + f"{list(c.values())[0]} "
-                    + f"{'♦'*list(c.values())[0]:<7}"
-                    + colors["reset"]
-                    + "|"
-                    if c else "|"+" "*9+"|"
+                    (
+                        f"|"
+                        + colors[list(c)[0]]
+                        + f"{list(c.values())[0]} "
+                        + f"{'♦'*list(c.values())[0]:<7}"
+                        + colors["reset"]
+                        + "|"
+                        if c
+                        else "|" + " " * 9 + "|"
+                    )
                     for c in row
                 ]
             )
