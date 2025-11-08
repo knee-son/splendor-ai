@@ -8,48 +8,65 @@ from core.path_manager import METADATA_DIR
 cards_input = METADATA_DIR / "cards_minified.json"
 cards_output = METADATA_DIR / "cards.json"
 
-with open(cards_input, "r") as f:
-    o = json.load(f)
 
-df = pandas.DataFrame(o)
+def generate():
+    with open(cards_input, "r") as f:
+        o = json.load(f)
 
-arr = ["onyx", "sapphire", "emerald", "ruby", "diamond"]
-sorted = ["diamond", "sapphire", "emerald", "ruby", "onyx"]
-costs = ["onyx", "diamond", "ruby", "sapphire", "emerald"]
+    df = pandas.DataFrame(o)
 
-df = df.rename(
-    columns={
-        "bonus": "engine",
-        "points": "prestige",
-    }
-)
+    arr = ["onyx", "sapphire", "emerald", "ruby", "diamond"]
+    sorted = ["diamond", "sapphire", "emerald", "ruby", "onyx"]
+    costs = ["onyx", "diamond", "ruby", "sapphire", "emerald"]
 
-# from number to name
-df["engine"] = [arr[i] for i in df["engine"]]
+    df = df.rename(
+        columns={
+            "bonus": "engine",
+            "points": "prestige",
+        }
+    )
 
-# sort 'engine' by doing magic jack shit
-from functools import reduce
+    # from number to name
+    df["engine"] = [arr[i] for i in df["engine"]]
 
-disassembled = [df[df["engine"] == gem] for gem in sorted]
-assembled = reduce(lambda a, b: pandas.concat([a, b], ignore_index=True), disassembled)
+    # sort 'engine' by doing magic jack shit
+    from functools import reduce
 
-df = assembled
+    disassembled = [df[df["engine"] == gem] for gem in sorted]
+    assembled = reduce(
+        lambda a, b: pandas.concat([a, b], ignore_index=True), disassembled
+    )
 
-# sort by tier afterwards
-df.sort_values(by=["tier"], inplace=True)
+    df = assembled
 
-# mutate 'cost' col by appending JSON costs
-costs_col = df["cost"]
-costs_col = [{costs[i]: cost_row[i] for i in range(5)} for cost_row in costs_col]
-df["cost"] = costs_col
+    # mutate 'cost' col by appending JSON costs
+    costs_col = df["cost"]
+    costs_col = [{costs[i]: cost_row[i] for i in range(5)} for cost_row in costs_col]
+    df["cost"] = costs_col
 
-# add index
-df = df.reset_index(names="id")
+    def gems_key(col):
+        for i, e in enumerate(col):
+            l = list(e.keys())
+            l.sort()
+            col[i] = tuple(e[k] for k in l)
 
-json_str = df.to_json(orient="records")
+        return col
 
-parsed = json.loads(json_str)
-pretty = json.dumps(parsed, indent=4)
+    # sort by tier afterwards
+    df.sort_values(
+        by=["tier", "engine", "prestige", "cost"],
+        key=lambda col: gems_key(col) if col.name == "cost" else col,
+        inplace=True,
+        ignore_index=True,
+    )
 
-with open(cards_output, "w") as f:
-    f.write(pretty)
+    # add index
+    df = df.reset_index(names="id")
+
+    json_str = df.to_json(orient="records")
+
+    parsed = json.loads(json_str)
+    pretty = json.dumps(parsed, indent=4)
+
+    with open(cards_output, "w") as f:
+        f.write(pretty)

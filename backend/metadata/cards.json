@@ -5,10 +5,10 @@
         "prestige": 0,
         "cost": {
             "onyx": 0,
-            "diamond": 3,
+            "diamond": 0,
             "ruby": 0,
-            "sapphire": 0,
-            "emerald": 0
+            "sapphire": 2,
+            "emerald": 1
         },
         "tier": 1
     },
@@ -30,10 +30,10 @@
         "engine": "diamond",
         "prestige": 0,
         "cost": {
-            "onyx": 0,
-            "diamond": 0,
+            "onyx": 1,
+            "diamond": 1,
             "ruby": 0,
-            "sapphire": 2,
+            "sapphire": 1,
             "emerald": 1
         },
         "tier": 1
@@ -43,11 +43,11 @@
         "engine": "diamond",
         "prestige": 0,
         "cost": {
-            "onyx": 2,
+            "onyx": 0,
             "diamond": 2,
-            "ruby": 0,
+            "ruby": 2,
             "sapphire": 0,
-            "emerald": 1
+            "emerald": 0
         },
         "tier": 1
     },
@@ -69,10 +69,10 @@
         "engine": "diamond",
         "prestige": 0,
         "cost": {
-            "onyx": 1,
-            "diamond": 1,
+            "onyx": 2,
+            "diamond": 2,
             "ruby": 0,
-            "sapphire": 1,
+            "sapphire": 0,
             "emerald": 1
         },
         "tier": 1
@@ -83,8 +83,8 @@
         "prestige": 0,
         "cost": {
             "onyx": 0,
-            "diamond": 2,
-            "ruby": 2,
+            "diamond": 3,
+            "ruby": 0,
             "sapphire": 0,
             "emerald": 0
         },
@@ -104,241 +104,20 @@
         "tier": 1
     },
     {
-        "id": 24,
-        "engine": "sapphire",
-        "prestige": 0,
-        "cost": {
-            "onyx": 2,
-            "diamond": 0,
-            "ruby": 0,
-            "sapphire": 0,
-            "emerald": 2
-        },
-        "tier": 1
-    },
-    {
-        "id": 25,
-        "engine": "sapphire",
-        "prestige": 1,
-        "cost": {
-            "onyx": 0,
-            "diamond": 0,
-            "ruby": 4,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 1
-    },
-    {
-        "id": 23,
-        "engine": "sapphire",
+        "id": 8,
+        "engine": "emerald",
         "prestige": 0,
         "cost": {
             "onyx": 0,
-            "diamond": 1,
+            "diamond": 0,
             "ruby": 2,
-            "sapphire": 0,
-            "emerald": 2
-        },
-        "tier": 1
-    },
-    {
-        "id": 22,
-        "engine": "sapphire",
-        "prestige": 0,
-        "cost": {
-            "onyx": 3,
-            "diamond": 0,
-            "ruby": 0,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 1
-    },
-    {
-        "id": 20,
-        "engine": "sapphire",
-        "prestige": 0,
-        "cost": {
-            "onyx": 1,
-            "diamond": 1,
-            "ruby": 1,
-            "sapphire": 0,
-            "emerald": 1
-        },
-        "tier": 1
-    },
-    {
-        "id": 21,
-        "engine": "sapphire",
-        "prestige": 0,
-        "cost": {
-            "onyx": 0,
-            "diamond": 0,
-            "ruby": 1,
-            "sapphire": 1,
-            "emerald": 3
-        },
-        "tier": 1
-    },
-    {
-        "id": 18,
-        "engine": "sapphire",
-        "prestige": 0,
-        "cost": {
-            "onyx": 2,
-            "diamond": 1,
-            "ruby": 0,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 1
-    },
-    {
-        "id": 19,
-        "engine": "sapphire",
-        "prestige": 0,
-        "cost": {
-            "onyx": 1,
-            "diamond": 1,
-            "ruby": 2,
-            "sapphire": 0,
-            "emerald": 1
-        },
-        "tier": 1
-    },
-    {
-        "id": 54,
-        "engine": "ruby",
-        "prestige": 0,
-        "cost": {
-            "onyx": 0,
-            "diamond": 3,
-            "ruby": 0,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 1
-    },
-    {
-        "id": 55,
-        "engine": "ruby",
-        "prestige": 0,
-        "cost": {
-            "onyx": 3,
-            "diamond": 1,
-            "ruby": 1,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 1
-    },
-    {
-        "id": 61,
-        "engine": "ruby",
-        "prestige": 1,
-        "cost": {
-            "onyx": 0,
-            "diamond": 4,
-            "ruby": 0,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 1
-    },
-    {
-        "id": 60,
-        "engine": "ruby",
-        "prestige": 0,
-        "cost": {
-            "onyx": 0,
-            "diamond": 2,
-            "ruby": 2,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 1
-    },
-    {
-        "id": 59,
-        "engine": "ruby",
-        "prestige": 0,
-        "cost": {
-            "onyx": 1,
-            "diamond": 1,
-            "ruby": 0,
-            "sapphire": 1,
-            "emerald": 1
-        },
-        "tier": 1
-    },
-    {
-        "id": 58,
-        "engine": "ruby",
-        "prestige": 0,
-        "cost": {
-            "onyx": 1,
-            "diamond": 2,
-            "ruby": 0,
-            "sapphire": 1,
-            "emerald": 1
-        },
-        "tier": 1
-    },
-    {
-        "id": 57,
-        "engine": "ruby",
-        "prestige": 0,
-        "cost": {
-            "onyx": 2,
-            "diamond": 2,
-            "ruby": 0,
-            "sapphire": 0,
-            "emerald": 1
-        },
-        "tier": 1
-    },
-    {
-        "id": 56,
-        "engine": "ruby",
-        "prestige": 0,
-        "cost": {
-            "onyx": 0,
-            "diamond": 0,
-            "ruby": 0,
             "sapphire": 2,
-            "emerald": 1
-        },
-        "tier": 1
-    },
-    {
-        "id": 40,
-        "engine": "emerald",
-        "prestige": 0,
-        "cost": {
-            "onyx": 2,
-            "diamond": 1,
-            "ruby": 1,
-            "sapphire": 1,
             "emerald": 0
         },
         "tier": 1
     },
     {
-        "id": 41,
-        "engine": "emerald",
-        "prestige": 0,
-        "cost": {
-            "onyx": 2,
-            "diamond": 0,
-            "ruby": 2,
-            "sapphire": 1,
-            "emerald": 0
-        },
-        "tier": 1
-    },
-    {
-        "id": 42,
+        "id": 9,
         "engine": "emerald",
         "prestige": 0,
         "cost": {
@@ -351,46 +130,46 @@
         "tier": 1
     },
     {
-        "id": 43,
-        "engine": "emerald",
-        "prestige": 1,
-        "cost": {
-            "onyx": 4,
-            "diamond": 0,
-            "ruby": 0,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 1
-    },
-    {
-        "id": 36,
+        "id": 10,
         "engine": "emerald",
         "prestige": 0,
         "cost": {
-            "onyx": 0,
-            "diamond": 2,
-            "ruby": 0,
+            "onyx": 2,
+            "diamond": 0,
+            "ruby": 2,
             "sapphire": 1,
             "emerald": 0
         },
         "tier": 1
     },
     {
-        "id": 37,
+        "id": 11,
         "engine": "emerald",
         "prestige": 0,
         "cost": {
-            "onyx": 0,
-            "diamond": 0,
-            "ruby": 2,
-            "sapphire": 2,
+            "onyx": 1,
+            "diamond": 1,
+            "ruby": 1,
+            "sapphire": 1,
             "emerald": 0
         },
         "tier": 1
     },
     {
-        "id": 38,
+        "id": 12,
+        "engine": "emerald",
+        "prestige": 0,
+        "cost": {
+            "onyx": 2,
+            "diamond": 1,
+            "ruby": 1,
+            "sapphire": 1,
+            "emerald": 0
+        },
+        "tier": 1
+    },
+    {
+        "id": 13,
         "engine": "emerald",
         "prestige": 0,
         "cost": {
@@ -403,59 +182,33 @@
         "tier": 1
     },
     {
-        "id": 39,
+        "id": 14,
         "engine": "emerald",
         "prestige": 0,
         "cost": {
-            "onyx": 1,
-            "diamond": 1,
-            "ruby": 1,
+            "onyx": 0,
+            "diamond": 2,
+            "ruby": 0,
             "sapphire": 1,
             "emerald": 0
         },
         "tier": 1
     },
     {
-        "id": 72,
-        "engine": "onyx",
-        "prestige": 0,
+        "id": 15,
+        "engine": "emerald",
+        "prestige": 1,
         "cost": {
-            "onyx": 0,
-            "diamond": 1,
-            "ruby": 1,
-            "sapphire": 1,
-            "emerald": 1
-        },
-        "tier": 1
-    },
-    {
-        "id": 73,
-        "engine": "onyx",
-        "prestige": 0,
-        "cost": {
-            "onyx": 0,
+            "onyx": 4,
             "diamond": 0,
-            "ruby": 1,
-            "sapphire": 0,
-            "emerald": 2
-        },
-        "tier": 1
-    },
-    {
-        "id": 74,
-        "engine": "onyx",
-        "prestige": 0,
-        "cost": {
-            "onyx": 0,
-            "diamond": 2,
             "ruby": 0,
             "sapphire": 0,
-            "emerald": 2
+            "emerald": 0
         },
         "tier": 1
     },
     {
-        "id": 75,
+        "id": 16,
         "engine": "onyx",
         "prestige": 0,
         "cost": {
@@ -468,7 +221,20 @@
         "tier": 1
     },
     {
-        "id": 76,
+        "id": 17,
+        "engine": "onyx",
+        "prestige": 0,
+        "cost": {
+            "onyx": 0,
+            "diamond": 0,
+            "ruby": 1,
+            "sapphire": 0,
+            "emerald": 2
+        },
+        "tier": 1
+    },
+    {
+        "id": 18,
         "engine": "onyx",
         "prestige": 0,
         "cost": {
@@ -481,7 +247,20 @@
         "tier": 1
     },
     {
-        "id": 77,
+        "id": 19,
+        "engine": "onyx",
+        "prestige": 0,
+        "cost": {
+            "onyx": 0,
+            "diamond": 1,
+            "ruby": 1,
+            "sapphire": 1,
+            "emerald": 1
+        },
+        "tier": 1
+    },
+    {
+        "id": 20,
         "engine": "onyx",
         "prestige": 0,
         "cost": {
@@ -494,7 +273,7 @@
         "tier": 1
     },
     {
-        "id": 78,
+        "id": 21,
         "engine": "onyx",
         "prestige": 0,
         "cost": {
@@ -507,7 +286,20 @@
         "tier": 1
     },
     {
-        "id": 79,
+        "id": 22,
+        "engine": "onyx",
+        "prestige": 0,
+        "cost": {
+            "onyx": 0,
+            "diamond": 2,
+            "ruby": 0,
+            "sapphire": 0,
+            "emerald": 2
+        },
+        "tier": 1
+    },
+    {
+        "id": 23,
         "engine": "onyx",
         "prestige": 1,
         "cost": {
@@ -520,15 +312,314 @@
         "tier": 1
     },
     {
-        "id": 49,
-        "engine": "emerald",
-        "prestige": 3,
+        "id": 24,
+        "engine": "ruby",
+        "prestige": 0,
         "cost": {
             "onyx": 0,
             "diamond": 0,
             "ruby": 0,
+            "sapphire": 2,
+            "emerald": 1
+        },
+        "tier": 1
+    },
+    {
+        "id": 25,
+        "engine": "ruby",
+        "prestige": 0,
+        "cost": {
+            "onyx": 3,
+            "diamond": 1,
+            "ruby": 1,
             "sapphire": 0,
-            "emerald": 6
+            "emerald": 0
+        },
+        "tier": 1
+    },
+    {
+        "id": 26,
+        "engine": "ruby",
+        "prestige": 0,
+        "cost": {
+            "onyx": 1,
+            "diamond": 1,
+            "ruby": 0,
+            "sapphire": 1,
+            "emerald": 1
+        },
+        "tier": 1
+    },
+    {
+        "id": 27,
+        "engine": "ruby",
+        "prestige": 0,
+        "cost": {
+            "onyx": 0,
+            "diamond": 2,
+            "ruby": 2,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 1
+    },
+    {
+        "id": 28,
+        "engine": "ruby",
+        "prestige": 0,
+        "cost": {
+            "onyx": 1,
+            "diamond": 2,
+            "ruby": 0,
+            "sapphire": 1,
+            "emerald": 1
+        },
+        "tier": 1
+    },
+    {
+        "id": 29,
+        "engine": "ruby",
+        "prestige": 0,
+        "cost": {
+            "onyx": 2,
+            "diamond": 2,
+            "ruby": 0,
+            "sapphire": 0,
+            "emerald": 1
+        },
+        "tier": 1
+    },
+    {
+        "id": 30,
+        "engine": "ruby",
+        "prestige": 0,
+        "cost": {
+            "onyx": 0,
+            "diamond": 3,
+            "ruby": 0,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 1
+    },
+    {
+        "id": 31,
+        "engine": "ruby",
+        "prestige": 1,
+        "cost": {
+            "onyx": 0,
+            "diamond": 4,
+            "ruby": 0,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 1
+    },
+    {
+        "id": 32,
+        "engine": "sapphire",
+        "prestige": 0,
+        "cost": {
+            "onyx": 3,
+            "diamond": 0,
+            "ruby": 0,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 1
+    },
+    {
+        "id": 33,
+        "engine": "sapphire",
+        "prestige": 0,
+        "cost": {
+            "onyx": 2,
+            "diamond": 0,
+            "ruby": 0,
+            "sapphire": 0,
+            "emerald": 2
+        },
+        "tier": 1
+    },
+    {
+        "id": 34,
+        "engine": "sapphire",
+        "prestige": 0,
+        "cost": {
+            "onyx": 0,
+            "diamond": 0,
+            "ruby": 1,
+            "sapphire": 1,
+            "emerald": 3
+        },
+        "tier": 1
+    },
+    {
+        "id": 35,
+        "engine": "sapphire",
+        "prestige": 0,
+        "cost": {
+            "onyx": 2,
+            "diamond": 1,
+            "ruby": 0,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 1
+    },
+    {
+        "id": 36,
+        "engine": "sapphire",
+        "prestige": 0,
+        "cost": {
+            "onyx": 1,
+            "diamond": 1,
+            "ruby": 1,
+            "sapphire": 0,
+            "emerald": 1
+        },
+        "tier": 1
+    },
+    {
+        "id": 37,
+        "engine": "sapphire",
+        "prestige": 0,
+        "cost": {
+            "onyx": 1,
+            "diamond": 1,
+            "ruby": 2,
+            "sapphire": 0,
+            "emerald": 1
+        },
+        "tier": 1
+    },
+    {
+        "id": 38,
+        "engine": "sapphire",
+        "prestige": 0,
+        "cost": {
+            "onyx": 0,
+            "diamond": 1,
+            "ruby": 2,
+            "sapphire": 0,
+            "emerald": 2
+        },
+        "tier": 1
+    },
+    {
+        "id": 39,
+        "engine": "sapphire",
+        "prestige": 1,
+        "cost": {
+            "onyx": 0,
+            "diamond": 0,
+            "ruby": 4,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 1
+    },
+    {
+        "id": 40,
+        "engine": "diamond",
+        "prestige": 0,
+        "cost": {
+            "onyx": 3,
+            "diamond": 0,
+            "ruby": 2,
+            "sapphire": 3,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 41,
+        "engine": "diamond",
+        "prestige": 0,
+        "cost": {
+            "onyx": 3,
+            "diamond": 2,
+            "ruby": 2,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 42,
+        "engine": "diamond",
+        "prestige": 2,
+        "cost": {
+            "onyx": 5,
+            "diamond": 0,
+            "ruby": 0,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 43,
+        "engine": "diamond",
+        "prestige": 2,
+        "cost": {
+            "onyx": 0,
+            "diamond": 1,
+            "ruby": 0,
+            "sapphire": 4,
+            "emerald": 2
+        },
+        "tier": 2
+    },
+    {
+        "id": 44,
+        "engine": "diamond",
+        "prestige": 2,
+        "cost": {
+            "onyx": 5,
+            "diamond": 3,
+            "ruby": 0,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 45,
+        "engine": "diamond",
+        "prestige": 3,
+        "cost": {
+            "onyx": 0,
+            "diamond": 0,
+            "ruby": 6,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 46,
+        "engine": "emerald",
+        "prestige": 1,
+        "cost": {
+            "onyx": 1,
+            "diamond": 2,
+            "ruby": 0,
+            "sapphire": 3,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 47,
+        "engine": "emerald",
+        "prestige": 1,
+        "cost": {
+            "onyx": 1,
+            "diamond": 3,
+            "ruby": 3,
+            "sapphire": 0,
+            "emerald": 2
         },
         "tier": 2
     },
@@ -546,85 +637,7 @@
         "tier": 2
     },
     {
-        "id": 62,
-        "engine": "ruby",
-        "prestige": 1,
-        "cost": {
-            "onyx": 3,
-            "diamond": 0,
-            "ruby": 2,
-            "sapphire": 3,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 63,
-        "engine": "ruby",
-        "prestige": 1,
-        "cost": {
-            "onyx": 3,
-            "diamond": 2,
-            "ruby": 2,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 27,
-        "engine": "sapphire",
-        "prestige": 1,
-        "cost": {
-            "onyx": 3,
-            "diamond": 0,
-            "ruby": 0,
-            "sapphire": 2,
-            "emerald": 3
-        },
-        "tier": 2
-    },
-    {
-        "id": 26,
-        "engine": "sapphire",
-        "prestige": 1,
-        "cost": {
-            "onyx": 0,
-            "diamond": 0,
-            "ruby": 3,
-            "sapphire": 2,
-            "emerald": 2
-        },
-        "tier": 2
-    },
-    {
-        "id": 31,
-        "engine": "sapphire",
-        "prestige": 3,
-        "cost": {
-            "onyx": 0,
-            "diamond": 0,
-            "ruby": 0,
-            "sapphire": 6,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 30,
-        "engine": "sapphire",
-        "prestige": 2,
-        "cost": {
-            "onyx": 4,
-            "diamond": 2,
-            "ruby": 1,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 47,
+        "id": 49,
         "engine": "emerald",
         "prestige": 2,
         "cost": {
@@ -637,7 +650,7 @@
         "tier": 2
     },
     {
-        "id": 46,
+        "id": 50,
         "engine": "emerald",
         "prestige": 2,
         "cost": {
@@ -650,228 +663,20 @@
         "tier": 2
     },
     {
-        "id": 45,
+        "id": 51,
         "engine": "emerald",
-        "prestige": 1,
-        "cost": {
-            "onyx": 1,
-            "diamond": 2,
-            "ruby": 0,
-            "sapphire": 3,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 44,
-        "engine": "emerald",
-        "prestige": 1,
-        "cost": {
-            "onyx": 1,
-            "diamond": 3,
-            "ruby": 3,
-            "sapphire": 0,
-            "emerald": 2
-        },
-        "tier": 2
-    },
-    {
-        "id": 64,
-        "engine": "ruby",
-        "prestige": 2,
-        "cost": {
-            "onyx": 0,
-            "diamond": 1,
-            "ruby": 0,
-            "sapphire": 4,
-            "emerald": 2
-        },
-        "tier": 2
-    },
-    {
-        "id": 65,
-        "engine": "ruby",
-        "prestige": 2,
-        "cost": {
-            "onyx": 5,
-            "diamond": 3,
-            "ruby": 0,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 66,
-        "engine": "ruby",
-        "prestige": 2,
-        "cost": {
-            "onyx": 5,
-            "diamond": 0,
-            "ruby": 0,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 67,
-        "engine": "ruby",
         "prestige": 3,
         "cost": {
             "onyx": 0,
             "diamond": 0,
-            "ruby": 6,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 8,
-        "engine": "diamond",
-        "prestige": 0,
-        "cost": {
-            "onyx": 3,
-            "diamond": 0,
-            "ruby": 2,
-            "sapphire": 3,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 9,
-        "engine": "diamond",
-        "prestige": 0,
-        "cost": {
-            "onyx": 3,
-            "diamond": 2,
-            "ruby": 2,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 10,
-        "engine": "diamond",
-        "prestige": 2,
-        "cost": {
-            "onyx": 0,
-            "diamond": 1,
-            "ruby": 0,
-            "sapphire": 4,
-            "emerald": 2
-        },
-        "tier": 2
-    },
-    {
-        "id": 11,
-        "engine": "diamond",
-        "prestige": 2,
-        "cost": {
-            "onyx": 5,
-            "diamond": 3,
             "ruby": 0,
             "sapphire": 0,
-            "emerald": 0
+            "emerald": 6
         },
         "tier": 2
     },
     {
-        "id": 12,
-        "engine": "diamond",
-        "prestige": 2,
-        "cost": {
-            "onyx": 5,
-            "diamond": 0,
-            "ruby": 0,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 13,
-        "engine": "diamond",
-        "prestige": 3,
-        "cost": {
-            "onyx": 0,
-            "diamond": 0,
-            "ruby": 6,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 29,
-        "engine": "sapphire",
-        "prestige": 2,
-        "cost": {
-            "onyx": 0,
-            "diamond": 0,
-            "ruby": 0,
-            "sapphire": 5,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 28,
-        "engine": "sapphire",
-        "prestige": 2,
-        "cost": {
-            "onyx": 0,
-            "diamond": 5,
-            "ruby": 0,
-            "sapphire": 3,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 84,
-        "engine": "onyx",
-        "prestige": 2,
-        "cost": {
-            "onyx": 0,
-            "diamond": 0,
-            "ruby": 3,
-            "sapphire": 0,
-            "emerald": 5
-        },
-        "tier": 2
-    },
-    {
-        "id": 85,
-        "engine": "onyx",
-        "prestige": 3,
-        "cost": {
-            "onyx": 6,
-            "diamond": 0,
-            "ruby": 0,
-            "sapphire": 0,
-            "emerald": 0
-        },
-        "tier": 2
-    },
-    {
-        "id": 81,
-        "engine": "onyx",
-        "prestige": 1,
-        "cost": {
-            "onyx": 2,
-            "diamond": 3,
-            "ruby": 0,
-            "sapphire": 0,
-            "emerald": 3
-        },
-        "tier": 2
-    },
-    {
-        "id": 80,
+        "id": 52,
         "engine": "onyx",
         "prestige": 1,
         "cost": {
@@ -884,20 +689,20 @@
         "tier": 2
     },
     {
-        "id": 83,
+        "id": 53,
         "engine": "onyx",
-        "prestige": 2,
+        "prestige": 1,
         "cost": {
-            "onyx": 0,
-            "diamond": 5,
+            "onyx": 2,
+            "diamond": 3,
             "ruby": 0,
             "sapphire": 0,
-            "emerald": 0
+            "emerald": 3
         },
         "tier": 2
     },
     {
-        "id": 82,
+        "id": 54,
         "engine": "onyx",
         "prestige": 2,
         "cost": {
@@ -910,46 +715,202 @@
         "tier": 2
     },
     {
-        "id": 53,
-        "engine": "emerald",
-        "prestige": 5,
+        "id": 55,
+        "engine": "onyx",
+        "prestige": 2,
         "cost": {
             "onyx": 0,
             "diamond": 0,
-            "ruby": 0,
-            "sapphire": 7,
-            "emerald": 0
+            "ruby": 3,
+            "sapphire": 0,
+            "emerald": 5
         },
-        "tier": 3
+        "tier": 2
     },
     {
-        "id": 52,
-        "engine": "emerald",
-        "prestige": 4,
+        "id": 56,
+        "engine": "onyx",
+        "prestige": 2,
         "cost": {
             "onyx": 0,
-            "diamond": 0,
+            "diamond": 5,
             "ruby": 0,
-            "sapphire": 7,
+            "sapphire": 0,
             "emerald": 0
         },
-        "tier": 3
+        "tier": 2
     },
     {
-        "id": 15,
-        "engine": "diamond",
-        "prestige": 4,
+        "id": 57,
+        "engine": "onyx",
+        "prestige": 3,
         "cost": {
-            "onyx": 0,
+            "onyx": 6,
             "diamond": 0,
             "ruby": 0,
             "sapphire": 0,
-            "emerald": 7
+            "emerald": 0
         },
-        "tier": 3
+        "tier": 2
     },
     {
-        "id": 14,
+        "id": 58,
+        "engine": "ruby",
+        "prestige": 1,
+        "cost": {
+            "onyx": 3,
+            "diamond": 0,
+            "ruby": 2,
+            "sapphire": 3,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 59,
+        "engine": "ruby",
+        "prestige": 1,
+        "cost": {
+            "onyx": 3,
+            "diamond": 2,
+            "ruby": 2,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 60,
+        "engine": "ruby",
+        "prestige": 2,
+        "cost": {
+            "onyx": 5,
+            "diamond": 0,
+            "ruby": 0,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 61,
+        "engine": "ruby",
+        "prestige": 2,
+        "cost": {
+            "onyx": 0,
+            "diamond": 1,
+            "ruby": 0,
+            "sapphire": 4,
+            "emerald": 2
+        },
+        "tier": 2
+    },
+    {
+        "id": 62,
+        "engine": "ruby",
+        "prestige": 2,
+        "cost": {
+            "onyx": 5,
+            "diamond": 3,
+            "ruby": 0,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 63,
+        "engine": "ruby",
+        "prestige": 3,
+        "cost": {
+            "onyx": 0,
+            "diamond": 0,
+            "ruby": 6,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 64,
+        "engine": "sapphire",
+        "prestige": 1,
+        "cost": {
+            "onyx": 0,
+            "diamond": 0,
+            "ruby": 3,
+            "sapphire": 2,
+            "emerald": 2
+        },
+        "tier": 2
+    },
+    {
+        "id": 65,
+        "engine": "sapphire",
+        "prestige": 1,
+        "cost": {
+            "onyx": 3,
+            "diamond": 0,
+            "ruby": 0,
+            "sapphire": 2,
+            "emerald": 3
+        },
+        "tier": 2
+    },
+    {
+        "id": 66,
+        "engine": "sapphire",
+        "prestige": 2,
+        "cost": {
+            "onyx": 0,
+            "diamond": 0,
+            "ruby": 0,
+            "sapphire": 5,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 67,
+        "engine": "sapphire",
+        "prestige": 2,
+        "cost": {
+            "onyx": 4,
+            "diamond": 2,
+            "ruby": 1,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 68,
+        "engine": "sapphire",
+        "prestige": 2,
+        "cost": {
+            "onyx": 0,
+            "diamond": 5,
+            "ruby": 0,
+            "sapphire": 3,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 69,
+        "engine": "sapphire",
+        "prestige": 3,
+        "cost": {
+            "onyx": 0,
+            "diamond": 0,
+            "ruby": 0,
+            "sapphire": 6,
+            "emerald": 0
+        },
+        "tier": 2
+    },
+    {
+        "id": 70,
         "engine": "diamond",
         "prestige": 3,
         "cost": {
@@ -962,20 +923,7 @@
         "tier": 3
     },
     {
-        "id": 17,
-        "engine": "diamond",
-        "prestige": 5,
-        "cost": {
-            "onyx": 0,
-            "diamond": 0,
-            "ruby": 3,
-            "sapphire": 0,
-            "emerald": 7
-        },
-        "tier": 3
-    },
-    {
-        "id": 16,
+        "id": 71,
         "engine": "diamond",
         "prestige": 4,
         "cost": {
@@ -988,72 +936,33 @@
         "tier": 3
     },
     {
-        "id": 32,
-        "engine": "sapphire",
-        "prestige": 3,
-        "cost": {
-            "onyx": 5,
-            "diamond": 3,
-            "ruby": 3,
-            "sapphire": 0,
-            "emerald": 3
-        },
-        "tier": 3
-    },
-    {
-        "id": 33,
-        "engine": "sapphire",
+        "id": 72,
+        "engine": "diamond",
         "prestige": 4,
         "cost": {
             "onyx": 0,
-            "diamond": 7,
+            "diamond": 0,
             "ruby": 0,
             "sapphire": 0,
-            "emerald": 0
+            "emerald": 7
         },
         "tier": 3
     },
     {
-        "id": 34,
-        "engine": "sapphire",
-        "prestige": 4,
-        "cost": {
-            "onyx": 3,
-            "diamond": 6,
-            "ruby": 0,
-            "sapphire": 3,
-            "emerald": 0
-        },
-        "tier": 3
-    },
-    {
-        "id": 35,
-        "engine": "sapphire",
+        "id": 73,
+        "engine": "diamond",
         "prestige": 5,
         "cost": {
             "onyx": 0,
-            "diamond": 7,
-            "ruby": 0,
-            "sapphire": 3,
-            "emerald": 0
+            "diamond": 0,
+            "ruby": 3,
+            "sapphire": 0,
+            "emerald": 7
         },
         "tier": 3
     },
     {
-        "id": 51,
-        "engine": "emerald",
-        "prestige": 4,
-        "cost": {
-            "onyx": 0,
-            "diamond": 3,
-            "ruby": 0,
-            "sapphire": 6,
-            "emerald": 3
-        },
-        "tier": 3
-    },
-    {
-        "id": 50,
+        "id": 74,
         "engine": "emerald",
         "prestige": 3,
         "cost": {
@@ -1066,59 +975,46 @@
         "tier": 3
     },
     {
-        "id": 70,
-        "engine": "ruby",
+        "id": 75,
+        "engine": "emerald",
         "prestige": 4,
         "cost": {
             "onyx": 0,
             "diamond": 0,
-            "ruby": 3,
-            "sapphire": 3,
-            "emerald": 6
+            "ruby": 0,
+            "sapphire": 7,
+            "emerald": 0
         },
         "tier": 3
     },
     {
-        "id": 71,
-        "engine": "ruby",
-        "prestige": 5,
+        "id": 76,
+        "engine": "emerald",
+        "prestige": 4,
         "cost": {
             "onyx": 0,
-            "diamond": 0,
-            "ruby": 3,
-            "sapphire": 0,
-            "emerald": 7
-        },
-        "tier": 3
-    },
-    {
-        "id": 68,
-        "engine": "ruby",
-        "prestige": 3,
-        "cost": {
-            "onyx": 3,
             "diamond": 3,
             "ruby": 0,
-            "sapphire": 5,
+            "sapphire": 6,
             "emerald": 3
         },
         "tier": 3
     },
     {
-        "id": 69,
-        "engine": "ruby",
-        "prestige": 4,
+        "id": 77,
+        "engine": "emerald",
+        "prestige": 5,
         "cost": {
             "onyx": 0,
             "diamond": 0,
             "ruby": 0,
-            "sapphire": 0,
-            "emerald": 7
+            "sapphire": 7,
+            "emerald": 0
         },
         "tier": 3
     },
     {
-        "id": 86,
+        "id": 78,
         "engine": "onyx",
         "prestige": 3,
         "cost": {
@@ -1131,7 +1027,7 @@
         "tier": 3
     },
     {
-        "id": 87,
+        "id": 79,
         "engine": "onyx",
         "prestige": 4,
         "cost": {
@@ -1144,7 +1040,7 @@
         "tier": 3
     },
     {
-        "id": 88,
+        "id": 80,
         "engine": "onyx",
         "prestige": 4,
         "cost": {
@@ -1157,7 +1053,7 @@
         "tier": 3
     },
     {
-        "id": 89,
+        "id": 81,
         "engine": "onyx",
         "prestige": 5,
         "cost": {
@@ -1165,6 +1061,110 @@
             "diamond": 0,
             "ruby": 7,
             "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 3
+    },
+    {
+        "id": 82,
+        "engine": "ruby",
+        "prestige": 3,
+        "cost": {
+            "onyx": 3,
+            "diamond": 3,
+            "ruby": 0,
+            "sapphire": 5,
+            "emerald": 3
+        },
+        "tier": 3
+    },
+    {
+        "id": 83,
+        "engine": "ruby",
+        "prestige": 4,
+        "cost": {
+            "onyx": 0,
+            "diamond": 0,
+            "ruby": 3,
+            "sapphire": 3,
+            "emerald": 6
+        },
+        "tier": 3
+    },
+    {
+        "id": 84,
+        "engine": "ruby",
+        "prestige": 4,
+        "cost": {
+            "onyx": 0,
+            "diamond": 0,
+            "ruby": 0,
+            "sapphire": 0,
+            "emerald": 7
+        },
+        "tier": 3
+    },
+    {
+        "id": 85,
+        "engine": "ruby",
+        "prestige": 5,
+        "cost": {
+            "onyx": 0,
+            "diamond": 0,
+            "ruby": 3,
+            "sapphire": 0,
+            "emerald": 7
+        },
+        "tier": 3
+    },
+    {
+        "id": 86,
+        "engine": "sapphire",
+        "prestige": 3,
+        "cost": {
+            "onyx": 5,
+            "diamond": 3,
+            "ruby": 3,
+            "sapphire": 0,
+            "emerald": 3
+        },
+        "tier": 3
+    },
+    {
+        "id": 87,
+        "engine": "sapphire",
+        "prestige": 4,
+        "cost": {
+            "onyx": 3,
+            "diamond": 6,
+            "ruby": 0,
+            "sapphire": 3,
+            "emerald": 0
+        },
+        "tier": 3
+    },
+    {
+        "id": 88,
+        "engine": "sapphire",
+        "prestige": 4,
+        "cost": {
+            "onyx": 0,
+            "diamond": 7,
+            "ruby": 0,
+            "sapphire": 0,
+            "emerald": 0
+        },
+        "tier": 3
+    },
+    {
+        "id": 89,
+        "engine": "sapphire",
+        "prestige": 5,
+        "cost": {
+            "onyx": 0,
+            "diamond": 7,
+            "ruby": 0,
+            "sapphire": 3,
             "emerald": 0
         },
         "tier": 3

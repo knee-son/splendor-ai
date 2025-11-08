@@ -8,9 +8,6 @@ fi
 required_version=$(cat .python-version)
 python_version=$(python --version 2>&1 | awk '{print $2}')
 
-cat .python-version
-ls
-
 if [ "$python_version" != "$required_version" ]; then
     echo "❌ Python $required_version required (found $python_version)."
     echo "ℹ️  Try installing pyenv to manage your Python version."
