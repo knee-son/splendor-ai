@@ -296,6 +296,7 @@ class SplendorEnv(Env):
             for t in state["cards"].values()
         ]
 
+        # debug for checking whited-out ansi before sending as API
         print(self._get_ansi())
 
         return "\n".join(
@@ -310,18 +311,48 @@ class SplendorEnv(Env):
     def _get_ansi(self):
         colors = {
             "reset": "\033[0m",
+            "bold": "\033[1m",
+            "gold": "\033[93m",
             "diamond": "\033[97m",
             "ruby": "\033[91m",
             "sapphire": "\033[94m",
-            "onyx": "\033[90m",
             "emerald": "\033[92m",
+            "onyx": "\033[90m",
         }
 
         COLS = 64
 
         state = self.state
 
-        nobles = " ".join(f"|{n['name'].upper():<9}|" for n in state["nobles"])
+        current_player = f"It's currently player {state['current_player']+1}'s turn."
+
+        players = [
+            "".join(
+                [
+                    (colors["bold"] if i == state["current_player"] else "")
+                    + f"{'Player '+str(i+1)+' ('+str(p['prestige'])+')':<16}"
+                    + (colors["reset"] if i == state["current_player"] else "")
+                    for i, p in enumerate(state["players"])
+                ]
+            )
+        ]
+        players.append("".join([f"{'cards':<16}"] * self.NUM_PLAYERS))
+        players.append("".join([f"{'nobles':<16}"] * self.NUM_PLAYERS))
+        players.append("".join([f"{'reserves':<16}"] * self.NUM_PLAYERS))
+        players.append("".join([f"{'coins':<16}"] * self.NUM_PLAYERS))
+
+        bank = (
+            "Bank: | "
+            + " ".join(
+                [
+                    colors[g] + "◆" * state["bank"][g] + colors["reset"]
+                    for g in ("gold", *self.GEM_TYPES)
+                ]
+            )
+            + " |"
+        )
+
+        nobles = " ".join(f"|{n['name'].capitalize():^9}|" for n in state["nobles"])
 
         costs = [noble["cost"] for noble in state["nobles"]]
         flat_costs = [[{k: v} for k, v in cost.items() if v] for cost in costs]
@@ -332,12 +363,12 @@ class SplendorEnv(Env):
             " ".join(
                 [
                     (
-                        f"|"
+                        f"| "
                         + colors[list(c)[0]]
                         + f"{list(c.values())[0]} "
-                        + f"{'♦'*list(c.values())[0]:<7}"
+                        + f"{'♦'*list(c.values())[0]:<5}"
                         + colors["reset"]
-                        + "|"
+                        + " |"
                         if c
                         else "|" + " " * 9 + "|"
                     )
@@ -348,7 +379,7 @@ class SplendorEnv(Env):
         ]
 
         w = self.MAX_CARD_COST // 2
-        cards = [
+        shop_header = [
             f" [{len(t['pile']):>2} left]  "
             + "  ".join(
                 f"| {colors[c['engine']]}{c['id']:<{w}}{('◆'+str(c['prestige'])) if c['prestige'] else '':>{w}}{colors['reset']} |"
@@ -357,35 +388,51 @@ class SplendorEnv(Env):
             for t in state["cards"].values()
         ]
 
-        bank = "Bank:"
+        # this was just copied over and would not work...yet
+        shop_costs = []
+        for tier in state["cards"].values():
+            cards = tier["revealed"]
+            costs = [card["cost"] for card in cards]
+            flat_costs = [[{k: v} for k, v in cost.items() if v] for cost in costs]
+            max_len = max(len(row) for row in flat_costs)
+            padded = [row + [None] * (max_len - len(row)) for row in flat_costs]
+            rotated = list(zip(*padded))
+            shop_costs = [
+                " ".join(
+                    [
+                        (
+                            f"| "
+                            + colors[list(c)[0]]
+                            + f"{'♦'*list(c.values())[0]:<5}"
+                            + colors["reset"]
+                            + " |"
+                            if c
+                            else "|" + " " * 9 + "|"
+                        )
+                        for c in row
+                    ]
+                )
+                for row in rotated
+            ]
 
-        players = [
-            "".join(
-                [
-                    f"{'Player '+str(i+1)+' ('+str(p['prestige'])+')':<16}"
-                    for i, p in enumerate(state["players"])
-                ]
-            )
-        ]
-        players.append("".join([f"{'cards':<16}"] * self.NUM_PLAYERS))
-        players.append("".join([f"{'nobles':<16}"] * self.NUM_PLAYERS))
-        players.append("".join([f"{'reserves':<16}"] * self.NUM_PLAYERS))
-        players.append("".join([f"{'coins':<16}"] * self.NUM_PLAYERS))
+        print(shop_costs)
+
+        shop = [item for h, c in (zip(shop_header, shop_costs)) for item in [h] + c]
 
         return "\n".join(
             [
-                f"It's currently player {state['current_player']+1}'s turn.",
+                current_player,
                 "",
                 *players,
+                "",
+                bank,
                 "",
                 "Nobles:",
                 nobles,
                 *noble_costs,
                 "",
-                bank,
-                "",
                 "Shop:",
-                *cards,
+                *shop,
             ]
         )
 
