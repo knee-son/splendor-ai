@@ -8,9 +8,7 @@ from game.splendor_env import SplendorEnv
 cards_dir = METADATA_DIR / "cards.json"
 nobles_dir = METADATA_DIR / "nobles.json"
 
-game_env = None
-game_env = SplendorEnv()
-game_env.render()
+game_env = SplendorEnv(render_mode="ansi")
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173"])
@@ -35,10 +33,11 @@ def get_nobles():
 def setup_board():
     payload = {}
 
-    game_env = SplendorEnv()
+    game_env.reset()
+    game_env.render()
 
     if "get-ascii" in request.args:
-        payload["ascii"] = game_env.get_human_ascii()
+        payload["ascii"] = game_env.get_ascii()
 
     payload["state"] = game_env.state
 

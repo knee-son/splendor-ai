@@ -111,8 +111,6 @@ class SplendorEnv(Env):
 
         self.render_mode = render_mode
 
-        self.reset()
-
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
         self.np_random, _ = seeding.np_random(seed)
@@ -279,34 +277,13 @@ class SplendorEnv(Env):
         return observation
 
     # would be just a formatted ansi without the ansi formatting
-    def get_human_ascii(self):
-        COLS = 64
+    def get_ascii(self):
+        ansi = self._get_ansi()
+        ansi_escape = re.compile(r"\033\[[0-9;]*m")
 
-        state = self.state
+        ascii = ansi_escape.sub("", ansi)
 
-        nobles = "".join(f"|{n['name'].upper():^10}|" for n in state["nobles"])
-
-        w = self.MAX_CARD_COST // 2
-        cards = [
-            f"[{len(t['pile'])}]  "
-            + " ".join(
-                f"|{c['id']:<{w}}{('♦'+str(c['prestige'])) if c['prestige'] else '':>{w}}|"
-                for c in t["revealed"]
-            )
-            for t in state["cards"].values()
-        ]
-
-        # debug for checking whited-out ansi before sending as API
-        print(self._get_ansi())
-
-        return "\n".join(
-            line.center(COLS)
-            for line in [
-                nobles,
-                "",
-                *cards,
-            ]
-        )
+        return ascii
 
     def _get_ansi(self):
         state = self.state
