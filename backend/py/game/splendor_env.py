@@ -309,6 +309,17 @@ class SplendorEnv(Env):
         )
 
     def _get_ansi(self):
+        state = self.state
+
+        def rotate_costs(costs):
+            """Rotates list of dicts to 2D array of dimension (gems, cards)."""
+            flat_costs = [[{k: v} for k, v in cost.items() if v] for cost in costs]
+            max_len = max(len(row) for row in flat_costs)
+            padded = [row + [None] * (max_len - len(row)) for row in flat_costs]
+            rotated = list(zip(*padded))
+
+            return rotated
+
         colors = {
             "reset": "\033[0m",
             "bold": "\033[1m",
@@ -320,10 +331,6 @@ class SplendorEnv(Env):
             "emerald": "\033[92m",
             "onyx": "\033[90m",
         }
-
-        COLS = 64
-
-        state = self.state
 
         current_player = f"It's currently player {state['current_player']+1}'s turn."
 
@@ -356,10 +363,8 @@ class SplendorEnv(Env):
         nobles = " ".join(f"|{n['name'].capitalize():^9}|" for n in state["nobles"])
 
         costs = [noble["cost"] for noble in state["nobles"]]
-        flat_costs = [[{k: v} for k, v in cost.items() if v] for cost in costs]
-        max_len = max(len(row) for row in flat_costs)
-        padded = [row + [None] * (max_len - len(row)) for row in flat_costs]
-        rotated = list(zip(*padded))
+        rotated = rotate_costs(costs)
+
         noble_costs = [
             " ".join(
                 [
@@ -393,14 +398,8 @@ class SplendorEnv(Env):
         # this was just copied over and would not work...yet
         shop_costs = []
         for tier in state["cards"].values():
-            cards = tier["revealed"]
-            costs = [card["cost"] for card in cards]
-
-            flat_costs = [[{k: v} for k, v in cost.items() if v] for cost in costs]
-            max_len = max(len(row) for row in flat_costs)
-
-            padded = [row + [None] * (max_len - len(row)) for row in flat_costs]
-            rotated = list(zip(*padded))
+            costs = [card["cost"] for card in tier["revealed"]]
+            rotated = rotate_costs(costs)
 
             text = [
                 " " * 12
