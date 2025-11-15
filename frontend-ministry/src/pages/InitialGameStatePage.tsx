@@ -1,7 +1,15 @@
+/**
+ * InitialGameStatePage
+ *
+ * A v1 of what the UI for the Splendor game looks like.
+ *
+ * @page
+ */
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import type { Card, Noble } from "@/types/splendor";
+import type { Card, Noble, State } from "@/types/splendor";
 import NobleCard from "@/components/NobleCard";
 import EngineCard from "@/components/NobleCard";
 
@@ -14,13 +22,13 @@ export default function InitialGameStatePage() {
 
   const [nobles, setNobles] = useState<Noble[]>([]);
   const [cards, setCards] = useState<Card[]>([]);
-  const [gameState, setGameState] = useState<string>("Loading board...");
+  const [gameState, setGameState] = useState<State | null>(null);
 
   function fetchInitialState() {
     fetch(`${init_url}?get-ascii`)
       .then((res) => res.json())
       .then((data) => {
-        setGameState(data.ascii);
+        setGameState(data.state);
         console.log(data.state);
       });
   }
@@ -54,12 +62,7 @@ export default function InitialGameStatePage() {
         Reshuffle Board
       </button>
 
-      <div
-        className="bg-[#f5deb3] text-gray-800 font-mono w-9/12 aspect-square flex items-center justify-center p-8 rounded-lg shadow-md max-w-xl text-center border border-amber-700 text-sm"
-        style={{ whiteSpace: "pre-wrap" }}
-      >
-        {gameState}
-      </div>
+      {/* <NobleCard nobleInfo={gameState.} /> */}
     </div>
   );
 }
