@@ -312,6 +312,7 @@ class SplendorEnv(Env):
         colors = {
             "reset": "\033[0m",
             "bold": "\033[1m",
+            "under": "\033[4m",
             "gold": "\033[93m",
             "diamond": "\033[97m",
             "ruby": "\033[91m",
@@ -378,11 +379,12 @@ class SplendorEnv(Env):
             for row in rotated
         ]
 
-        w = self.MAX_CARD_COST // 2
+        w = self.MAX_CARD_COST // 2 + 1
         shop_header = [
             f" [{len(t['pile']):>2} left]  "
-            + "  ".join(
-                f"| {colors[c['engine']]}{c['id']:<{w}}{('◆'+str(c['prestige'])) if c['prestige'] else '':>{w}}{colors['reset']} |"
+            + " ".join(
+                # TODO: make this vertical ffs
+                f"|{colors['bold']}{colors['under']}{colors[c['engine']]}{c['id']:<{w}}{('◆'+str(c['prestige'])) if c['prestige'] else '':>{w}}{colors['reset']}|"
                 for c in t["revealed"]
             )
             for t in state["cards"].values()
@@ -393,30 +395,36 @@ class SplendorEnv(Env):
         for tier in state["cards"].values():
             cards = tier["revealed"]
             costs = [card["cost"] for card in cards]
+
             flat_costs = [[{k: v} for k, v in cost.items() if v] for cost in costs]
             max_len = max(len(row) for row in flat_costs)
+
             padded = [row + [None] * (max_len - len(row)) for row in flat_costs]
             rotated = list(zip(*padded))
-            shop_costs = [
-                " ".join(
+
+            text = [
+                " " * 12
+                + " ".join(
                     [
                         (
-                            f"| "
+                            f"|"
                             + colors[list(c)[0]]
-                            + f"{'♦'*list(c.values())[0]:<5}"
+                            + f"{'♦'*list(c.values())[0]:<{w*2}}"
                             + colors["reset"]
-                            + " |"
+                            + "|"
                             if c
-                            else "|" + " " * 9 + "|"
+                            else " " * (w + 1) * 2
                         )
                         for c in row
                     ]
                 )
                 for row in rotated
             ]
+            text.append("")
 
-        print(shop_costs)
+            shop_costs.append(text)
 
+        shop = [""]
         shop = [item for h, c in (zip(shop_header, shop_costs)) for item in [h] + c]
 
         return "\n".join(
