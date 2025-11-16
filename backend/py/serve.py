@@ -29,6 +29,8 @@ def get_nobles():
         return jsonify(json.load(f))
 
 
+# this API is for ministry only, as we are exposing the state,
+# which includes the hidden cards not yet placed on board
 @app.route("/setup")
 def setup_board():
     payload = {}
