@@ -13,6 +13,7 @@ import type { State, TierKey } from "@/types/splendor";
 import NobleCard from "@/components/NobleCard";
 import EngineCard from "@/components/EngineCard";
 import EngineUnderside from "@/components/EngineUnderside";
+import GemCoin from "@/components/GemCoin";
 
 export default function InitialGameStatePage() {
   const navigate = useNavigate();
@@ -159,7 +160,9 @@ export default function InitialGameStatePage() {
         </div>
 
         {/* bank */}
-        <div className="w-1/3 mx-auto flex flex-col bg-slate-800  rounded-2xl"></div>
+        <div className="w-1/3 mx-auto flex flex-col bg-slate-800  rounded-2xl">
+          <GemCoin coinType="gold" />
+        </div>
       </div>
     </div>
   );

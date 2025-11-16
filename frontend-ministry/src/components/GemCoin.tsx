@@ -20,11 +20,11 @@ const coinImages: Record<CoinType, string> = {
   gold: goldLump,
 };
 
-export default function NobleCard({ coinType }: CoinProps) {
+export default function GemCoin({ coinType }: CoinProps) {
   const gemImage = coinImages[coinType];
 
   return (
-    <div className="absolute bottom-2 left-2 text-lg rounded-md">
+    <div className="bottom-2 left-2 text-lg rounded-full bg-amber-400">
       <div className="flex flex-col">
         <img
           src={gemImage}
