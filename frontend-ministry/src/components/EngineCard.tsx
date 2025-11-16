@@ -35,19 +35,23 @@ export default function EngineCard({ cardInfo }: CardProps) {
 
   return (
     <div
-      className="w-80 h-96 border-2 border-gray-800 rounded-lg shadow-md relative text-2xl font-semibold"
+      className="h-full aspect-[4/5] border-1 border-gray-500 rounded-lg shadow-md relative text-2xl font-semibold"
       style={{
         backgroundImage: `url(${imageSrc})`,
         backgroundSize: "cover",
         backgroundPosition: "top center",
       }}
     >
-      <div className="absolute w-full flex justify-between items-start p-2 bg-gray-200/60 rounded-t-md">
-        <div className="text-4xl">
+      {/* card header */}
+      <div className="absolute h-1/5 w-full flex justify-between items-start p-2 bg-gray-400/60 rounded-t-md">
+        <div
+          className="flex items-center justify-center h-full font-extrabold text-white"
+          style={{ WebkitTextStroke: "1px #111111" }}
+        >
           {cardInfo?.prestige ? cardInfo.prestige : ""}
         </div>
 
-        <div className="w-14 h-14">
+        <div className="h-full">
           <img
             src={gemImages[cardInfo?.engine]}
             alt={cardInfo?.engine}
@@ -64,13 +68,13 @@ export default function EngineCard({ cardInfo }: CardProps) {
             .map(([gem, amount]) => {
               const gemKey = gem as GemType;
               return (
-                <div key={gemKey} className="flex items-center gap-1">
+                <div key={gemKey} className="flex items-center gap-0.5">
                   <img
                     src={gemImages[gemKey]}
                     alt={gemKey}
-                    className="w-7 h-7 object-contain"
+                    className="w-1/3 h-1/3 object-contain"
                   />
-                  <span>{amount}</span>
+                  <span className="text-sm text-white">{amount}</span>
                 </div>
               );
             })}
