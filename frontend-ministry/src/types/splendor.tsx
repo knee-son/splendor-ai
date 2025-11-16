@@ -1,8 +1,9 @@
 export type GemType = "diamond" | "emerald" | "ruby" | "sapphire" | "onyx";
+export type CoinType = GemType | "gold";
 export type TierKey = "t1" | "t2" | "t3";
 
 export type Cost = Record<GemType, number>;
-export type Coins = Record<GemType | "gold", number>;
+export type Coins = Record<CoinType, number>;
 
 export interface Card {
   cost: Cost;
