@@ -24,7 +24,7 @@ def downscale():
             base_name = os.path.splitext(filename)[0]
             height = HEIGHT
 
-            if base_name.split("_")[-1] == "gem":
+            if base_name.split("_")[-1] == "gem" or base_name == "gold_lump":
                 height = GEM_HEIGHT
 
             img = Image.open(os.path.join(input_dir, filename))
