@@ -1,4 +1,5 @@
 export type GemType = "diamond" | "emerald" | "ruby" | "sapphire" | "onyx";
+export type TierKey = "t1" | "t2" | "t3";
 
 export type Cost = Record<GemType, number>;
 export type Coins = Record<GemType | "gold", number>;
@@ -30,11 +31,7 @@ interface Player {
 
 export interface State {
   bank: Coins;
-  cards: {
-    t1: Tier;
-    t2: Tier;
-    t3: Tier;
-  };
+  cards: Record<TierKey, Tier>;
   current_player: number;
   last_chance: boolean;
   nobles: Array<Noble>;
