@@ -10,3 +10,5 @@ BASE_DIR = env_path.parent
 
 METADATA_DIR = BASE_DIR / Path(os.getenv("METADATA_DIR"))
 SCRIPTS_DIR = BASE_DIR / Path(os.getenv("SCRIPTS_DIR"))
+IMAGE_INPUT = BASE_DIR / Path(os.getenv("IMAGE_INPUT"))
+IMAGE_OUTPUT = BASE_DIR / Path(os.getenv("IMAGE_OUTPUT"))

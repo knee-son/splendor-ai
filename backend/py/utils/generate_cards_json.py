@@ -9,7 +9,7 @@ cards_input = METADATA_DIR / "cards_minified.json"
 cards_output = METADATA_DIR / "cards.json"
 
 
-def generate():
+def run():
     with open(cards_input, "r") as f:
         o = json.load(f)
 

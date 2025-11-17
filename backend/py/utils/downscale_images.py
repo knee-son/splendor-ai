@@ -2,10 +2,11 @@
 
 import os
 
+from core.path_manager import IMAGE_INPUT, IMAGE_OUTPUT
 from PIL import Image
 
-input_dir = "../../frontend-ministry/src/assets/images/hi-res/"
-output_dir = "../../frontend-ministry/src/assets/images/"
+input_dir = IMAGE_INPUT
+output_dir = IMAGE_OUTPUT
 
 WIDTH = 300
 HEIGHT = 450
@@ -13,7 +14,7 @@ HEIGHT = 450
 GEM_HEIGHT = 50
 
 
-def downscale():
+def run():
     for filename in os.listdir(output_dir):
         file_path = os.path.join(output_dir, filename)
         if os.path.isfile(file_path):
@@ -27,7 +28,7 @@ def downscale():
             if base_name.split("_")[-1] == "gem" or base_name == "gold_lump":
                 height = GEM_HEIGHT
 
-            img = Image.open(os.path.join(input_dir, filename))
+            img = Image.open(input_dir / filename)
             scale = height / img.height
 
             if base_name.split("_")[0] == "noble":

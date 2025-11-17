@@ -6,4 +6,9 @@
 # ./runscript downscale_images
 
 source ./activate-venv
-python ./py/$1.py
+
+if [ "$1" == "serve" ]; then
+    python ./py/serve.py
+else
+    python ./py/runscript.py $1
+fi
