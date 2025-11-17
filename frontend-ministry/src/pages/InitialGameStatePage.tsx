@@ -161,7 +161,9 @@ export default function InitialGameStatePage() {
 
         {/* bank */}
         <div className="w-1/3 mx-auto flex flex-col bg-slate-800  rounded-2xl">
-          <GemCoin coinType="gold" />
+          <div className="flex mt-2 ml-2">
+            <GemCoin coinType="gold" />
+          </div>
         </div>
       </div>
     </div>

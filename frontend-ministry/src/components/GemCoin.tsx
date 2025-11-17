@@ -24,14 +24,8 @@ export default function GemCoin({ coinType }: CoinProps) {
   const gemImage = coinImages[coinType];
 
   return (
-    <div className="bottom-2 left-2 text-lg rounded-full bg-amber-400">
-      <div className="flex flex-col">
-        <img
-          src={gemImage}
-          alt={coinType}
-          className="w-1/3 h-1/3 object-contain"
-        />
-      </div>
+    <div className="bottom-2 left-2 rounded-full bg-amber-400">
+      <img src={gemImage} alt={coinType} className="object-none" />
     </div>
   );
 }
