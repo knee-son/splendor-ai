@@ -9,23 +9,25 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import type { State, TierKey } from "@/types/splendor";
+import type { State, TierKey, CoinType } from "@/types/splendor";
 import NobleCard from "@/components/NobleCard";
 import EngineCard from "@/components/EngineCard";
 import EngineUnderside from "@/components/EngineUnderside";
 import GemCoin from "@/components/GemCoin";
 
 export default function InitialGameStatePage() {
+  const MAX_BANK_COINS = 5 + 7 * 5;
+
   const navigate = useNavigate();
 
   const init_url = import.meta.env.VITE_INIT_URL;
 
   const nobleRefs = useRef<(HTMLDivElement | null)[]>([]);
-
   const cardRefs = useRef<(HTMLDivElement | null)[][]>([]);
   const undersideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const [gameState, setGameState] = useState<State | null>(null);
+  const [bank, setBank] = useState<CoinType[] | null>(null);
   const [isFetching, setIsFetching] = useState<boolean>(true);
 
   async function fetchInitialState() {
@@ -37,6 +39,14 @@ export default function InitialGameStatePage() {
         setGameState(data.state);
       });
 
+    if (gameState) {
+      setBank(
+        Object.entries(gameState.bank).flatMap(([name, count]) =>
+          Array.from({ length: count }, () => name as CoinType),
+        ),
+      );
+    }
+
     setIsFetching(false);
   }
 
@@ -47,10 +57,10 @@ export default function InitialGameStatePage() {
   useEffect(() => {
     if (isFetching) {
       nobleRefs.current.slice(1).forEach((el) => {
-        animateToUnderside(el!, nobleRefs.current[0]!);
+        moveCardToCard(el!, nobleRefs.current[0]!);
       });
       cardRefs.current.forEach((row, i) => {
-        row.forEach((el) => animateToUnderside(el!, undersideRefs.current[i]!));
+        row.forEach((el) => moveCardToCard(el!, undersideRefs.current[i]!));
       });
     } else {
       nobleRefs.current.forEach((el) => {
@@ -75,19 +85,19 @@ export default function InitialGameStatePage() {
     }
   }, [isFetching]);
 
-  function animateToUnderside(cardEl: HTMLElement, undersideEl: HTMLElement) {
-    const cardRect = cardEl.getBoundingClientRect();
-    const underRect = undersideEl.getBoundingClientRect();
+  function moveCardToCard(start: HTMLElement, end: HTMLElement) {
+    const cardRect = start.getBoundingClientRect();
+    const underRect = end.getBoundingClientRect();
 
     const dx = underRect.left - cardRect.left;
     const dy = underRect.top - cardRect.top;
 
-    cardEl.style.transition = "transform 0.4s cubic-bezier(.2, .8, .2, 1)";
-    cardEl.style.transform = `translate(${dx}px, ${dy}px) scale(0.7)`;
+    start.style.transition = "transform 0.4s cubic-bezier(.2, .8, .2, 1)";
+    start.style.transform = `translate(${dx}px, ${dy}px) scale(0.7)`;
 
-    undersideEl.style.transition = "transform 0.4s cubic-bezier(.2, .8, .2, 1)";
-    undersideEl.style.transform = "scale(1.05) rotate(5deg)";
-    undersideEl.style.filter = "saturate(.5)";
+    end.style.transition = "transform 0.4s cubic-bezier(.2, .8, .2, 1)";
+    end.style.transform = "scale(1.05) rotate(5deg)";
+    end.style.filter = "saturate(.5)";
   }
 
   return (
@@ -161,8 +171,20 @@ export default function InitialGameStatePage() {
 
         {/* bank */}
         <div className="w-1/3 mx-auto flex flex-col bg-slate-800  rounded-2xl">
-          <div className="flex mt-2 ml-2">
-            <GemCoin coinType="gold" />
+          <div className="relative h-20">
+            {bank &&
+              bank.map((coin, i) => (
+                <div
+                  key={i}
+                  className="absolute top-0 w-[20%] aspect-square"
+                  style={{
+                    top: `${i * 20}%`, // overlap by reducing the distance
+                    zIndex: MAX_BANK_COINS - i,
+                  }}
+                >
+                  <GemCoin coin={coin as CoinType} />
+                </div>
+              ))}
           </div>
         </div>
       </div>
