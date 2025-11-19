@@ -33,19 +33,15 @@ export default function InitialGameStatePage() {
   async function fetchInitialState() {
     setIsFetching(true);
 
-    await fetch(`${init_url}?get-ascii`)
-      .then((res) => res.json())
-      .then((data) => {
-        setGameState(data.state);
-      });
+    const data = await fetch(init_url).then((res) => res.json());
 
-    if (gameState) {
-      setBank(
-        Object.entries(gameState.bank).flatMap(([name, count]) =>
-          Array.from({ length: count }, () => name as CoinType),
-        ),
-      );
-    }
+    setGameState(data.state);
+
+    setBank(
+      Object.entries(data.state.bank).flatMap(([name, count]) =>
+        Array.from({ length: count as number }, () => name as CoinType),
+      ),
+    );
 
     setIsFetching(false);
   }
