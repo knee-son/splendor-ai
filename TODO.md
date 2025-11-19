@@ -8,14 +8,18 @@
   - 📝 learned that tuples can be generated via list comprehension, and sort keys can't be lists since they're not hashable, only tuples are allowed
 - ✅ generate ANSI representation of game state
   - done and dusted 🤗
+- ✅ did a little sidequest and make the game ~~playable~~ renderable for the frontend
+  - learned that setting a useState is async
 
 ### now
-- let's do a little sidequest and make the game playable for the frontend
+- ✅ ansi will output on backend terminal (done)
+  - while all training and triggering will be done on ministry frontend
+  - hence, websocket fits perfect for this use case
+- let's work on backend and implement `step()`
+  - after `step()`, send ws event to FE
 
 ---
 ### others
-- ansi will output on backend terminal
-  - while all training and triggering will be done on ministry frontend
 - we may want to use Phaser as rendering engine for FE
 
 ### very, very, veryyyyyy far along the way
