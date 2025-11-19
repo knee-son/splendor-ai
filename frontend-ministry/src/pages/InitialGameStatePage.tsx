@@ -167,9 +167,9 @@ export default function InitialGameStatePage() {
 
         {/* bank */}
         <div className="w-1/3 mx-auto flex flex-col bg-slate-800  rounded-2xl">
-          <div className="relative h-20">
+          {/* <div className="relative h-20">
             {bank &&
-              bank.map((coin, i) => (
+              ['diamond', 'emerald', 'gold', 'onyx', 'ruby', 'sapphire'].map((coin, i) => (
                 <div
                   key={i}
                   className="absolute top-0 w-[20%] aspect-square"
@@ -179,6 +179,25 @@ export default function InitialGameStatePage() {
                   }}
                 >
                   <GemCoin coin={coin as CoinType} />
+                </div>
+              ))}
+          </div> */}
+          <div className="w-full h-1/3 grid grid-cols-2 grid-rows-3 gap-2 p-2">
+            {gameState &&
+              Object.entries(gameState.bank).map(([name, amt]) => (
+                <div className="relative bg-slate-900 rounded-l">
+                  {Array.from({ length: amt }, (_, i) => (
+                    <div
+                      key={i}
+                      className="absolute h-[80%] top-[10%] aspect-square"
+                      style={{
+                        left: `${i * 7 + 3}%`,
+                        zIndex: MAX_BANK_COINS - i,
+                      }}
+                    >
+                      <GemCoin coin={name as CoinType} />
+                    </div>
+                  ))}
                 </div>
               ))}
           </div>

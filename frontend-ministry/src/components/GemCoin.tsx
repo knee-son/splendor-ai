@@ -54,8 +54,11 @@ export default function GemCoin({ coin }: CoinProps) {
   const { image, ...style } = coinInfo[coin] as CoinDetails;
 
   return (
-    <div className="bottom-2 left-2 rounded-full border-2" style={style}>
-      <img src={image} alt={coin} className="object-contain" />
+    <div
+      className="bottom-2 left-2 rounded-full border-2 h-full w-full aspect-square p-1"
+      style={style}
+    >
+      <img src={image} alt={coin} className="h-full w-full" />
     </div>
   );
 }
