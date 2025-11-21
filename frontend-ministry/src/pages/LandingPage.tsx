@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { appRoutes } from "@/routes";
+import { landingRoutes } from "@/routes";
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -7,7 +7,7 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
       <div className="flex flex-col w-max items-stretch gap-4">
-        {appRoutes
+        {landingRoutes
           .filter((route) => route.label !== "Home")
           .map(({ label, path }) => (
             <button

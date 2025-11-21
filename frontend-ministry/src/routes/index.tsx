@@ -4,6 +4,7 @@ import LandingPage from "@/pages/LandingPage";
 import CardsPage from "@/pages/CardsPage";
 import NoblesPage from "@/pages/NoblesPage";
 import InitialGameStatePage from "@/pages/InitialGameStatePage";
+import ModelTrainingPage from "@/pages/ModelTrainingPage";
 
 interface AppRoute {
   label: string;
@@ -11,7 +12,7 @@ interface AppRoute {
   element: ReactElement;
 }
 
-export const appRoutes: AppRoute[] = [
+export const landingRoutes: AppRoute[] = [
   { label: "Home", path: "/", element: <LandingPage /> },
   { label: "Check Splendor Cards", path: "/cards", element: <CardsPage /> },
   { label: "Check Splendor Nobles", path: "/nobles", element: <NoblesPage /> },
@@ -20,4 +21,7 @@ export const appRoutes: AppRoute[] = [
     path: "/initial-game-state",
     element: <InitialGameStatePage />,
   },
+  { label: "Start training!", path: "/train", element: <ModelTrainingPage /> },
 ];
+
+export const appRoutes: AppRoute[] = [...landingRoutes];
