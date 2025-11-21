@@ -17,6 +17,7 @@
   - hence, websocket fits perfect for this use case
 - let's work on backend and implement `step()`
   - after `step()`, send ws event to FE
+- holy fuck, i need to migrate to ASGI
 
 ---
 ### others
