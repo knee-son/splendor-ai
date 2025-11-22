@@ -54,7 +54,7 @@ async def setup_board(get_ascii: bool = Query(False, alias="get-ascii")):
     return JSONResponse(payload)
 
 
-# ---------------- WebSocket Training --------------------
+# ---------------- WebSocket Manager --------------------
 class ConnectionManager:
     def __init__(self):
         self.active_connections: list[WebSocket] = []
@@ -74,12 +74,12 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 
-@app.websocket("/ws/train")
+@app.websocket("/train")
 async def websocket_train(websocket: WebSocket):
     await manager.connect(websocket)
     try:
         step = 0
-        while step < 100:  # mock 100 steps
+        while step < 10:  # mock 100 steps
             step += 1
             loss = round(1.0 / step, 4)
             accuracy = round(step / 100, 4)
