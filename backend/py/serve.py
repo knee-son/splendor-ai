@@ -152,7 +152,9 @@ async def generate_step():
 
 @app.websocket("/ws/train")
 async def ws_train(ws: WebSocket):
+    await manager.connect(ws)
     try:
-        await manager.connect(ws)
+        while True:
+            await ws.receive_text()
     except WebSocketDisconnect:
         await manager.disconnect(ws)
