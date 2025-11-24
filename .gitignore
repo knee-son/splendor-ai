@@ -8,3 +8,6 @@ __pycache__/
 
 # 🤫🧏
 .vscode
+
+# helper third parties
+*.exe

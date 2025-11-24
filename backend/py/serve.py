@@ -1,5 +1,6 @@
 import asyncio
 import json
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from core.path_manager import METADATA_DIR
@@ -13,7 +14,21 @@ nobles_dir = METADATA_DIR / "nobles.json"
 
 game_env = SplendorEnv(render_mode="ansi")
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    task = asyncio.create_task(generate_step())
+    try:
+        yield
+    finally:
+        task.cancel()
+        try:
+            await task
+        except asyncio.CancelledError:
+            print("Background task cancelled cleanly")
+
+
+app = FastAPI(lifespan=lifespan)
 
 # CORS
 origins = ["http://localhost:5173"]
@@ -23,6 +38,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # ---------------- API Endpoints --------------------
 
@@ -54,36 +70,89 @@ async def setup_board(get_ascii: bool = Query(False, alias="get-ascii")):
     return JSONResponse(payload)
 
 
-# ---------------- WebSocket Manager --------------------
+@app.get("/isitplaying")
+async def is_it_training():
+    return JSONResponse({"state": training_state["playing"]})
+
+
+@app.post("/train")
+async def manage_training(
+    cmd: str = Query(..., description="play, pause, step_forward, step_backward")
+):
+    print(cmd)
+    if cmd == "play":
+        training_state["playing"] = True
+        return {"status": "playing"}
+    elif cmd == "pause":
+        training_state["playing"] = False
+        return {"status": "paused"}
+    elif cmd == "step_forward":
+        training_state["step"] += 1
+        return {"status": "stepped_forward", "step": training_state["current_step"]}
+    elif cmd == "step_backward":
+        training_state["step"] -= 1
+        return {"status": "stepped_backward", "step": training_state["current_step"]}
+    else:
+        return {"error": "invalid action"}
+
+
+# ---------------- Manager for Multiple Clients --------------------
 class ConnectionManager:
     def __init__(self):
         self.active_connections: list[WebSocket] = []
 
-    async def connect(self, websocket: WebSocket):
-        await websocket.accept()
-        self.active_connections.append(websocket)
+    async def connect(self, ws: WebSocket):
+        await ws.accept()
+        self.active_connections.append(ws)
 
-    def disconnect(self, websocket: WebSocket):
-        self.active_connections.remove(websocket)
+    def disconnect(self, ws: WebSocket):
+        self.active_connections.remove(ws)
 
     async def broadcast(self, message: dict):
+        print("broadcasting", message)
+        assert type(message) is dict
+        to_remove = []
+
+        print(self.active_connections)
+
         for connection in self.active_connections:
-            await connection.send_json(message)
+            print("sending json", message)
+            try:
+                await connection.send_json(message)
+            except WebSocketDisconnect:
+                to_remove.append(connection)
+
+        for connection in to_remove:
+            self.disconnect(connection)
+
+        print("returning from broadcast")
 
 
 manager = ConnectionManager()
 
+training_state = {"playing": False, "step": 0}
 
-@app.websocket("/train")
-async def websocket_train(websocket: WebSocket):
-    await manager.connect(websocket)
+
+async def generate_step():
+    while True:
+        if training_state["playing"]:
+            if not manager.active_connections:
+                training_state["playing"] = False
+
+            training_state["step"] += 1
+            data = {
+                "step": str(training_state["step"]),
+                "loss": str(round(1.0 / training_state["step"], 4)),
+                "accuracy": str(round(training_state["step"] / 100, 4)),
+            }
+
+            asyncio.create_task(manager.broadcast(data))
+        await asyncio.sleep(0.5)
+
+
+@app.websocket("/ws/train")
+async def ws_train(ws: WebSocket):
     try:
-        step = 0
-        while step < 10:  # mock 100 steps
-            step += 1
-            loss = round(1.0 / step, 4)
-            accuracy = round(step / 100, 4)
-            await manager.broadcast({"step": step, "loss": loss, "accuracy": accuracy})
-            await asyncio.sleep(0.1)  # 100ms delay
+        await manager.connect(ws)
     except WebSocketDisconnect:
-        manager.disconnect(websocket)
+        await manager.disconnect(ws)
