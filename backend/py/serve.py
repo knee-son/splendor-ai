@@ -142,8 +142,7 @@ async def generate_step():
             training_state["step"] += 1
             data = {
                 "step": str(training_state["step"]),
-                "loss": str(round(1.0 / training_state["step"], 4)),
-                "accuracy": str(round(training_state["step"] / 100, 4)),
+                "action": str(game_env.action_space.sample()),
             }
 
             asyncio.create_task(manager.broadcast(data))
