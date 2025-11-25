@@ -102,8 +102,12 @@ class ConnectionManager:
         self.active_connections: list[WebSocket] = []
 
     async def connect(self, ws: WebSocket):
-        await ws.accept()
-        self.active_connections.append(ws)
+        if len(self.active_connections) < 4:
+            await ws.accept()
+            await ws.send_json({"player": len(self.active_connections)})
+            self.active_connections.append(ws)
+        else:
+            await ws.close(code=1001, reason="Server full (max 4 players)")
 
     def disconnect(self, ws: WebSocket):
         self.active_connections.remove(ws)
