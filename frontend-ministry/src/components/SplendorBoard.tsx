@@ -14,11 +14,37 @@ interface GameProps {
 export default function SplendorBoard({ gameState, isFetching }: GameProps) {
   const MAX_BANK_COINS = 5 + 7 * 5;
 
+  const fieldRef = useRef<HTMLDivElement>(null);
   const nobleRefs = useRef<(HTMLDivElement | null)[]>([]);
   const cardRefs = useRef<(HTMLDivElement | null)[][]>([]);
   const undersideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  function moveCardToCard(start: HTMLElement, end: HTMLElement) {
+  const handleDragStart = (
+    e: React.DragEvent<HTMLDivElement>,
+    row: number,
+    col: number,
+  ) => {
+    e.dataTransfer.setData("text/plain", JSON.stringify({ row, col }));
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    console.log("handled drop");
+    e.preventDefault();
+    const data = JSON.parse(e.dataTransfer.getData("text/plain"));
+    console.log("Dragged card:", data, "Dropped on my location sir");
+    console.log(cardRefs.current);
+    const div = document.createElement("div");
+    div.className = "w-[95%]";
+    div.append(cardRefs.current[data.row][data.col]);
+    fieldRef.current.append(div);
+    // fieldRef.current.append(cardRefs.current[data.row][data.col]);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  function animateCard(start: HTMLElement, end: HTMLElement) {
     const cardRect = start.getBoundingClientRect();
     const underRect = end.getBoundingClientRect();
 
@@ -36,10 +62,10 @@ export default function SplendorBoard({ gameState, isFetching }: GameProps) {
   useEffect(() => {
     if (isFetching) {
       nobleRefs.current.slice(1).forEach((el) => {
-        moveCardToCard(el!, nobleRefs.current[0]!);
+        animateCard(el!, nobleRefs.current[0]!);
       });
       cardRefs.current.forEach((row, i) => {
-        row.forEach((el) => moveCardToCard(el!, undersideRefs.current[i]!));
+        row.forEach((el) => animateCard(el!, undersideRefs.current[i]!));
       });
     } else {
       nobleRefs.current.forEach((el) => {
@@ -74,6 +100,7 @@ export default function SplendorBoard({ gameState, isFetching }: GameProps) {
             {gameState &&
               gameState.nobles.map((noble, i) => (
                 <div
+                  key={i}
                   ref={(el) => {
                     nobleRefs.current[i] = el;
                   }}
@@ -86,7 +113,7 @@ export default function SplendorBoard({ gameState, isFetching }: GameProps) {
 
           <div className="flex flex-col h-full gap-y-2 mt-8">
             {["t3", "t2", "t1"].map((tier, i) => (
-              <div className="flex h-1/4 justify-center gap-x-2">
+              <div key={i} className="flex h-1/4 justify-center gap-x-2">
                 {gameState?.cards[tier as TierKey].revealed[0] && (
                   <div
                     ref={(el) => {
@@ -100,12 +127,16 @@ export default function SplendorBoard({ gameState, isFetching }: GameProps) {
                 {gameState &&
                   gameState.cards[tier as TierKey].revealed.map((card, j) => (
                     <div
+                      key={j}
                       ref={(el) => {
                         if (!cardRefs.current[i]) cardRefs.current[i] = [];
                         cardRefs.current[i][j] = el;
                       }}
-                      className="relative transform-gpu"
+                      className="relative transform-gpu cursor-grab"
                       style={{ zIndex: `${4 - j}` }}
+                      draggable
+                      onDragOver={handleDragOver}
+                      onDragStart={(e) => handleDragStart(e, i, j)}
                     >
                       <EngineCard key={j} cardInfo={card} />
                     </div>
@@ -118,10 +149,10 @@ export default function SplendorBoard({ gameState, isFetching }: GameProps) {
 
       {/* bank */}
       <div className="w-1/3 mx-auto flex flex-col bg-slate-800  rounded-2xl">
-        <div className="w-full h-1/3 grid grid-cols-2 grid-rows-3 gap-2 p-2">
+        <div className="w-full h-1/3 grid grid-cols-2 gap-2 p-2">
           {gameState &&
             Object.entries(gameState.bank).map(([name, amt]) => (
-              <div className="relative bg-slate-900 rounded-l">
+              <div key={name} className="relative bg-slate-900 rounded-l">
                 {Array.from({ length: amt }, (_, i) => (
                   <div
                     key={i}
@@ -137,6 +168,12 @@ export default function SplendorBoard({ gameState, isFetching }: GameProps) {
               </div>
             ))}
         </div>
+        <div
+          ref={fieldRef}
+          className="border border-red-500 h-full grid grid-cols-2"
+          onDragOver={handleDragOver}
+          onDrop={(e) => handleDrop(e)}
+        />
       </div>
     </div>
   );
