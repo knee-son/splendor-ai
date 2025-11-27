@@ -29,6 +29,7 @@ I've been losing too much on this game. So I came up with the idea of training A
 
 ### on `frontend-ministry/`
 - run using `npm run dev`
+- you can also port forward, but with this config: `npm run dev -- --port=5174 --mode=tunnel`
 
 ## cards_minified.json
 ### source https://www.scribd.com/document/534963546/Splendor-Card-List-With-Pics

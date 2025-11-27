@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
 
 export default function ModelTrainingPage() {
+  const backend_url = import.meta.env.VITE_HTTP_URL;
+  const websocket_url = import.meta.env.VITE_WEBSOCKET_URL;
+
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [actions, setActions] = useState<string[]>([]);
 
   async function sendCommand(action: string) {
-    await fetch(`http://localhost:5000/train?cmd=${action}`, {
+    await fetch(`${backend_url}/train?cmd=${action}`, {
       method: "POST",
     });
   }
 
   useEffect(() => {
-    fetch("http://localhost:5000/isitplaying")
+    fetch(`${backend_url}/isitplaying`)
       .then((res) => res.json())
       .then((data) => setIsPlaying(data.state));
 
-    const ws = new WebSocket("ws://localhost:5000/ws/train");
+    const training_url = import.meta.env.VITE_WEBSOCKET_URL + "/train";
+    const ws = new WebSocket(training_url);
 
     ws.onmessage = (event) => {
       console.log(event.data);

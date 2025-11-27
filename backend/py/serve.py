@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 from core.path_manager import METADATA_DIR
+from core.url_manager import FRONTEND_TUNNEL_URL
 from fastapi import FastAPI, Query, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -31,7 +32,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 # CORS
-origins = ["http://localhost:5173"]
+origins = ["http://localhost:5173", FRONTEND_TUNNEL_URL]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,

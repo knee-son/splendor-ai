@@ -16,7 +16,7 @@ import type { State } from "@/types/splendor";
 export default function InitialGameStatePage() {
   const navigate = useNavigate();
 
-  const init_url = import.meta.env.VITE_INIT_URL;
+  const init_url = import.meta.env.VITE_HTTP_URL + "/setup";
 
   const [gameState, setGameState] = useState<State | null>(null);
   const [isFetching, setIsFetching] = useState<boolean>(true);
@@ -49,7 +49,7 @@ export default function InitialGameStatePage() {
         className="flex items-center p-3 bg-gray-500 text-white rounded-md absolute top-5 right-5 hover:bg-gray-600"
       >
         <span className="material-symbols-outlined mr-3">casino</span>
-        Reshuffle Board
+        Reset Board
       </button>
 
       <SplendorBoard gameState={gameState} isFetching={isFetching} />

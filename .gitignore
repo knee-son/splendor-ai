@@ -1,6 +1,7 @@
 # environment
 venv/
 .env
+.env.tunnel
 
 # backend
 __pycache__/
@@ -9,5 +10,5 @@ __pycache__/
 # 🤫🧏
 .vscode
 
-# helper third parties
-*.exe
+# helper file
+websocat.*

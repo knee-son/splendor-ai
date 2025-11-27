@@ -17,7 +17,7 @@ export const landingRoutes: AppRoute[] = [
   { label: "Check Splendor Cards", path: "/cards", element: <CardsPage /> },
   { label: "Check Splendor Nobles", path: "/nobles", element: <NoblesPage /> },
   {
-    label: "View Initial Game State",
+    label: "Play it Yourself",
     path: "/initial-game-state",
     element: <InitialGameStatePage />,
   },

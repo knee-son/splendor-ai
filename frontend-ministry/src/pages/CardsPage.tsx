@@ -23,7 +23,7 @@ export default function CardsPage() {
   }
 
   useEffect(() => {
-    const cards_url = import.meta.env.VITE_CARDS_URL;
+    const cards_url = import.meta.env.VITE_HTTP_URL + "/cards";
 
     fetch(cards_url)
       .then((res) => res.json())

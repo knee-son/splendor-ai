@@ -22,7 +22,7 @@ export default function CardsPage() {
   }
 
   useEffect(() => {
-    const nobles_url = import.meta.env.VITE_NOBLES_URL;
+    const nobles_url = import.meta.env.VITE_HTTP_URL + "/nobles";
 
     fetch(nobles_url)
       .then((res) => res.json())
