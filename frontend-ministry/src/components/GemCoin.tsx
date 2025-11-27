@@ -30,17 +30,17 @@ const coinInfo: Record<CoinType, object> = {
   },
   emerald: {
     image: emeraldGem,
-    background: "rgba(41, 203, 23, 1)",
+    background: "rgba(65, 216, 49, 1)",
     borderColor: "rgba(1, 91, 15, 1)",
   },
   ruby: {
     image: rubyGem,
-    background: "rgba(237, 121, 121, 1)",
+    background: "rgba(237, 106, 111, 1)",
     borderColor: "rgba(61, 6, 10, 1)",
   },
   onyx: {
     image: onyxGem,
-    background: "rgba(255, 197, 146, 1)",
+    background: "rgba(200, 159, 113, 1)",
     borderColor: "rgba(35, 13, 0, 1)",
   },
   gold: {
